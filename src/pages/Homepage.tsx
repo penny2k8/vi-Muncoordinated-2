@@ -43,7 +43,7 @@ const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
     />
     <Header
       as="h2"
-      content="Phần mềm quản lý hội đồng dành cho các hội nghị mô phỏng Liên Hợp Quốc- phiên bản Việt hóa"
+      content="Phần mềm quản lý hội đồng dành cho các hội nghị mô phỏng Liên Hợp Quốc - phiên bản Việt hóa"
       inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
@@ -304,7 +304,7 @@ export default class Homepage extends React.Component<{}, {
             <Grid divided inverted stackable>
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Header inverted as="h4" content="About" />
+                  <Header inverted as="h4" content="Về phần mềm" />
                   <List link inverted>
                     <List.Item as="a" href={REPO_LINK_ORIGINAL}>Muncoordinated</List.Item>
                     <List.Item as="a" href={REPO_LINK_NEW}>vi-Muncoordinated</List.Item>
@@ -316,20 +316,20 @@ export default class Homepage extends React.Component<{}, {
                     </List.Item>
                   </List>
                 </Grid.Column>
-                <Grid.Column width={3}>
-                  <Header inverted as="h4" content="Services" />
+                {/*<Grid.Column width={3}>
+                  <Header inverted as="h4" content= "Services"/>
                   <List link inverted>
                     <List.Item as="a" href="https://github.com/MaxwellBo/Muncoordinated-2/discussions">Forum</List.Item>
                     <List.Item as="a" href="https://github.com/MaxwellBo/Muncoordinated-2/issues">Support</List.Item>
                     <List.Item as="a" href="https://www.helpmymun.com/">MUN Resources</List.Item>
                   </List>
-                </Grid.Column>
+                </Grid.Column>*/}
                 <Grid.Column width={7}>
-                  <Header as="h4" inverted>Info</Header>
+                  <Header as="h4" inverted>Thông tin</Header>
                   <p>Made with <span role="img" aria-label="love">💖</span> by <a href="https://github.com/MaxwellBo">Max Bo</a>, 
                   with assistance from the <a href="https://www.facebook.com/UQUNSA/">UQ United Nations Student Association</a>, translated and adapted by <a href="https://github.com/MaxwellBo">Minh Le</a>
                   </p>
-                  <p>Copyright © 2024</p>
+                  <p>© 2026</p>
                 </Grid.Column>
               </Grid.Row>
             </Grid>

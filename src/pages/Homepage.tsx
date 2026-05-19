@@ -236,7 +236,7 @@ export default class Homepage extends React.Component<{}, {
           <Grid container stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={8}>
-                <Header as="h3" style={{ fontSize: '2em' }}>Hợp tác</Header>
+                <Header as="h3" style={{ fontSize: '2em' }}>Tính hợp tác cao</Header>
                 <p style={{ fontSize: '1.33em' }}>
                   Chỉ với một đường link, đại biểu có thể: <br />
                   <ShareCapabilities />
@@ -252,7 +252,7 @@ export default class Homepage extends React.Component<{}, {
                   Toàn bộ dữ liệu của hội đồng sẽ được lưu lên máy chủ, giúp bạn dễ dàng tiếp tục hoạt động của một phiên họp mới mà không cần nhập lại dữ liệu.
                 </p>
                 <p style={{ fontSize: '1.33em' }}>
-                  Ngoài ra, toàn bộ dữ liệu của bản tiếng Việt sẽ được lưu chung và đồng bộ hóa với máy chủ với phần mềm Muncoordinated gốc, nên bạn không cần phải nhập lại giữ liệu nếu muốn chuyển đổi về phiên bản gốc <i>(trừ phần quốc gia thành viên hội đồng, chúng mình sẽ cố gắng đồng bộ hóa sớm thôi!)</i>.
+                  Ngoài ra, toàn bộ dữ liệu của bản tiếng Việt sẽ được lưu chung và đồng bộ hóa với máy chủ với phần mềm Muncoordinated gốc, nên bạn không cần phải nhập lại dữ liệu nếu muốn chuyển đổi về phiên bản gốc <i>(trừ phần quốc gia thành viên hội đồng, chúng mình sẽ cố gắng đồng bộ hóa. Phiên bản hoàn thiện sẽ ra mắt sớm thôi!)</i>.
                 </p>
               </Grid.Column>
               <Grid.Column floated="right" width={8}>

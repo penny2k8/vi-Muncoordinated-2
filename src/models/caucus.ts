@@ -56,7 +56,7 @@ export interface SpeakerEvent {
 }
 
 export const DEFAULT_CAUCUS: CaucusData = {
-  name: 'untitled caucus',
+  name: 'phiên thảo luận chưa có tiêu đề',
   topic: '',
   status: CaucusStatus.Open,
   speakerTimer: {...DEFAULT_TIMER, remaining: DEFAULT_SPEAKER_TIME_SECONDS},

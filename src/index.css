@@ -2,3 +2,18 @@ body,
 .ui {
   font-family: 'Be Vietnam Pro', sans-serif !important;
 }
+textarea {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.ui.input input::placeholder {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+input[type="text"]{
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.header {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.ui.list .header {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}

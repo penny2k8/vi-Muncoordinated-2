@@ -247,7 +247,7 @@ export default class Homepage extends React.Component<{}, {
                 <p style={{ fontSize: '1.33em' }}>
                   Nhiều người có thể cùng quản lý một hội đồng lớn và sử dụng chung một tài khoản.
                 </p>
-                <Header as="h3" style={{ fontSize: '2em' }}>Lưu lên đám mây và đồng bộ hóa</Header>
+                <Header as="h3" style={{ fontSize: '2em' }}>Lưu lên máy chủ đám mây và đồng bộ hóa</Header>
                 <p style={{ fontSize: '1.33em' }}>
                   Toàn bộ dữ liệu của hội đồng sẽ được lưu lên máy chủ, giúp bạn dễ dàng tiếp tục hoạt động của một phiên họp mới mà không cần nhập lại dữ liệu.
                 </p>
@@ -285,6 +285,9 @@ export default class Homepage extends React.Component<{}, {
                 </p>
                 <p style={{ fontSize: '1.33em' }}>
                   Phần mềm này là phần mềm <a href="https://github.com/MaxwellBo/Muncoordinated-2">mã nguồn mở</a>, nên bạn hoàn toàn có thể điều chỉnh theo ý muốn
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                  Ngoài ra, phần mềm đã được thiết kế lại, bổ sung và bỏ bớt một số tính năng không cần thiết, phục vụ nhu cầu sử dụng của cộng đồng MUN Việt Nam, đặc biệt dành cho các hội đồng sử dụng tiếng Việt.
                 </p>
               </Grid.Column>
               <Grid.Column floated="right" width={8}>

@@ -314,7 +314,7 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Brazil'},
     {name: 'Canada'},
     {name: 'Trung Quốc'},
-    {name: 'Liên Minh châu Âu'},
+    {name: 'Liên minh châu Âu'},
     {name: 'Pháp'},
     {name: 'Đức'},
     {name: 'Ấn Độ'},

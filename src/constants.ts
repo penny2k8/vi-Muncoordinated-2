@@ -277,7 +277,7 @@ export const COUNTRY_OPTIONS = [
   {key: 'hn', value: 'hn', flag: 'hn', text: 'Honduras'},
   {key: 'hu', value: 'hu', flag: 'hu', text: 'Hungary'},
   {key: 'is', value: 'is', flag: 'is', text: 'Iceland'},
-  {key: 'in', value: 'in', flag: 'in', text: 'India'},
+  {key: 'in', value: 'in', flag: 'in', text: 'Ấn Độ'},
   {key: 'id', value: 'id', flag: 'id', text: 'Indonesia'},
   {key: 'ir', value: 'ir', flag: 'ir', text: 'Iran'},
   {key: 'iq', value: 'iq', flag: 'iq', text: 'Iraq'},

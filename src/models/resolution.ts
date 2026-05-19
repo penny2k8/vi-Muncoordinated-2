@@ -50,7 +50,7 @@ export enum Vote {
 
 type Votes = Record<string, Vote>;
 export const DEFAULT_RESOLUTION: ResolutionData = {
-  name: 'untitled resolution',
+  name: 'nghị quyết chưa có tiêu đề',
   link: '',
   status: ResolutionStatus.Introduced,
   amendments: {} as Record<AmendmentID, AmendmentData>,

@@ -76,12 +76,12 @@ export const MOTION_TYPE_OPTIONS: DropdownItemProps[] = [
   {key: MotionType.VoteOnResolution, value: MotionType.VoteOnResolution, text: "Biểu quyết thông qua dự thảo nghị quyết"},
   //{key: MotionType.ProposeStrawpoll, value: MotionType.ProposeStrawpoll, text: "Đề xuất Strawpoll"}, // ignored due to unsuitability for Vietnamese MUNs
   //{key: MotionType.SuspendDraftResolutionSpeakersList, value: MotionType.SuspendDraftResolutionSpeakersList, text: "Tạm đóng phiên thảo luận về dự thảo nghị quyết"}, // ignored due to unsuitability for Vietnamese MUNs
-  {key: MotionType.OpenDebate, value: MotionType.OpenDebate, text: "Mở phiên họp"},
+  {key: MotionType.OpenDebate, value: MotionType.OpenDebate, text: "Bắt đầu phiên họp"},
   {key: MotionType.SuspendDebate, value: MotionType.SuspendDebate, text: "Tạm dừng phiên họp"},
   {key: MotionType.ResumeDebate, value: MotionType.ResumeDebate, text: "Tiếp tục phiên họp"},
-  {key: MotionType.CloseDebate, value: MotionType.CloseDebate, text: "Đóng phiên họp"},
+  {key: MotionType.CloseDebate, value: MotionType.CloseDebate, text: "Kết thúc phiên họp"},
   {key: MotionType.ReorderDraftResolutions, value: MotionType.ReorderDraftResolutions, text: "Sắp xếp lại trình tự dự thảo nghị quyết"}, //might not be suitable, kept in anyway
-  {key: MotionType.AddWorkingPaper, value: MotionType.AddWorkingPaper, text: "Giới thiệu văn bản làm việc"},
+  {key: MotionType.AddWorkingPaper, value: MotionType.AddWorkingPaper, text: "Giới thiệu dự thảo tạm thời"},
 ];
 
 export const DEFAULT_MOTION: MotionData = {

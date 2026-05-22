@@ -218,11 +218,11 @@ export default class Resolution extends React.Component<Props, State> {
     const textArea = (
       <TextArea
         value={text}
-        label="Text"
+        label="Nội dung"
         autoHeight
         onChange={textAreaHandler<AmendmentData>(amendmentFref, 'text')}
         rows={1}
-        placeholder="Text"
+        placeholder="Nội dung"
       />
     );
 
@@ -264,7 +264,7 @@ export default class Resolution extends React.Component<Props, State> {
         floated="right"
         onClick={() => this.gotoCaucus(amendment!.caucus)}
       >
-        Associated caucus
+        Phiên thảo luận liên quan
         <Icon name="arrow right" />
       </Button>
     ):(
@@ -273,7 +273,7 @@ export default class Resolution extends React.Component<Props, State> {
         disabled={!amendment || amendment.proposer === '' || !hasAuth}
         onClick={() => handleProvisionAmendment(id, amendment!)}
       >
-        Provision caucus
+        Tạo phiên thảo luận
       </Button>
     );
 
@@ -416,7 +416,7 @@ export default class Resolution extends React.Component<Props, State> {
 
     return (
       <Dropdown
-        placeholder="Select majority type"
+        placeholder="Chọn loại đa số"
         search
         options={MAJORITY_OPTIONS}
         onChange={dropdownHandler<ResolutionData>(resolutionFref, 'requiredMajority')}
@@ -497,7 +497,7 @@ export default class Resolution extends React.Component<Props, State> {
             <Statistic.Value>Thông qua</Statistic.Value>
             <Statistic.Label>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
             {requiredMajority === Majority.TwoThirdsNoAbstentions &&
-              <Statistic.Label>Further votes may change the result from 'Passed'</Statistic.Label>
+              <Statistic.Label>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
             }
           </Statistic>}
           {resolutionFailed && <Statistic inverted>
@@ -649,7 +649,7 @@ export default class Resolution extends React.Component<Props, State> {
         attatched="top"
         size="massive"
         fluid
-        placeholder="Set resolution name"
+        placeholder="Tên nghị quyết"
       />
     );
   }

@@ -329,8 +329,11 @@ export default class Homepage extends React.Component<{}, {
                 </Grid.Column>*/}
                 <Grid.Column width={7}>
                   <Header as="h4" inverted>Thông tin</Header>
-                  <p>Made with <span role="img" aria-label="love">💖</span> by <a href="https://github.com/MaxwellBo">Max Bo</a>, 
-                  with assistance from the <a href="https://www.facebook.com/UQUNSA/">UQ United Nations Student Association</a>, translated and adapted by <a href="https://github.com/MaxwellBo">Minh Le</a>
+                  <p><b>Muncoordinated</b> được phát triển bởi <a href="https://github.com/MaxwellBo">Max Bo</a>, 
+                  với sự hỗ trợ của <a href="https://www.facebook.com/UQUNSA/">UQ United Nations Student Association</a>
+                  </p>
+                  <p><b>vi-Muncoordinated</b> được phát triển bởi <a href="https://github.com/penny2k8">Minh Le</a>,  
+                  với sự hỗ trợ của <a href="https://web.facebook.com/haiphongmun">Hai Phong Model United Nations</a>
                   </p>
                   <p>© 2026</p>
                 </Grid.Column>

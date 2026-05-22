@@ -11,11 +11,16 @@ export enum ResolutionStatus {
   Failed = 'Failed'
 }
 
-export const RESOLUTION_STATUS_OPTIONS = [
+/*export const RESOLUTION_STATUS_OPTIONS = [
   ResolutionStatus.Introduced,
   ResolutionStatus.Passed,
   ResolutionStatus.Failed
-].map(makeDropdownOption)
+].map(makeDropdownOption)*/
+export const RESOLUTION_STATUS_OPTIONS: DropdownItemProps[] = [
+  {key: ResolutionStatus.Introduced, value: ResolutionStatus.Introduced, text: "Giới thiệu"},
+  {key: ResolutionStatus.Passed, value: ResolutionStatus.Passed, text: "Thông qua"},
+  {key: ResolutionStatus.Failed, value: ResolutionStatus.Failed, text: "Không thông qua"},
+];
 
 export enum Majority {
   Simple = "Simple majority",
@@ -88,11 +93,18 @@ export enum AmendmentStatus {
   Rejected = 'Rejected'
 }
 
-export const AMENDMENT_STATUS_OPTIONS = [
+/*export const AMENDMENT_STATUS_OPTIONS = [
   AmendmentStatus.Proposed,
   AmendmentStatus.Incorporated,
   AmendmentStatus.Rejected
-].map(makeDropdownOption);
+].map(makeDropdownOption);*/
+
+export const AMENDMENT_STATUS_OPTIONS: DropdownItemProps[] = [
+  {key: AmendmentStatus.Proposed, value: AmendmentStatus.Proposed, text: "Đề xuất"},
+  {key: AmendmentStatus.Incorporated, value: AmendmentStatus.Incorporated, text: "Đã bổ sung"},
+  {key: AmendmentStatus.Rejected, value: AmendmentStatus.Rejected, text: "Từ chối"},
+]
+
 export type AmendmentID = string;
 
 export interface AmendmentData {

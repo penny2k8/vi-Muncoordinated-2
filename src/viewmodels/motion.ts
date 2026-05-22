@@ -150,7 +150,7 @@ export const detailLabel = (motionType: MotionType): string => {
     case MotionType.ProposeStrawpoll:
       return 'Vấn đề';
     case MotionType.AddWorkingPaper:
-      return "Công việc"
+      return "Nội dung"
     default:
       return '';
   }
@@ -182,21 +182,21 @@ export const showMotionType = (motionType: MotionType, time: string): string => 
     case MotionType.IntroduceDraftResolution:
       return `Giới thiệu dự thảo nghị quyết`;
     case MotionType.IntroduceAmendment:
-      return `Giới thiệu chỉnh sửa dự thảo nghị quyết`;
+      return `Giới thiệu sửa đổi dự thảo nghị quyết`;
     case MotionType.VoteOnResolution:
       return `Biểu quyết thông qua dự thảo nghị quyết`;
     case MotionType.OpenDebate:
-      return `Mở phiên họp`;
+      return `Bắt đầu phiên họp`;
     case MotionType.SuspendDebate:
       return `Tạm dừng phiên họp`;
     case MotionType.ResumeDebate:
       return `Tiếp tục phiên họp`;
     case MotionType.CloseDebate:
-      return `Đóng phiên họp`;
+      return `Kết thúc phiên họp`;
     case MotionType.ReorderDraftResolutions:
       return `Sắp xếp lại trình tự dự thảo nghị quyết`
     case MotionType.AddWorkingPaper:
-      return `Giới thiệu văn bản làm việc`;
+      return `Giới thiệu dự thảo tạm thời`;
     default:
       return sentenceCase(motionType ?? 'Unknown type');
   }

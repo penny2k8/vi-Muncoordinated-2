@@ -108,7 +108,7 @@ export interface CommitteeData {
 }
 
 const GENERAL_SPEAKERS_LIST: CaucusData = {
-  ...DEFAULT_CAUCUS, name: 'General Speakers\' List'
+  ...DEFAULT_CAUCUS, name: 'Danh sách phát biểu chung'
 };
 export const DEFAULT_COMMITTEE: CommitteeData = {
   name: '',

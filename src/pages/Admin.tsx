@@ -250,7 +250,7 @@ export default class Admin extends React.Component<Props, State> {
               <Table.HeaderCell />
               <Table.HeaderCell>Quyền lợi</Table.HeaderCell>
               <Table.HeaderCell>Có mặt</Table.HeaderCell>
-              <Table.HeaderCell>Bỏ phiếu</Table.HeaderCell>
+              <Table.HeaderCell>Biểu quyết</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
@@ -273,7 +273,7 @@ export default class Admin extends React.Component<Props, State> {
             primary
             fluid
           >
-            Tuyên bố mở đầu
+            Danh sách phát biểu chung
               <Icon name="arrow right" />
           </Button>
         }

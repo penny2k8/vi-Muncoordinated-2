@@ -4,6 +4,7 @@ import {makeDropdownOption, shortMeetId} from '../utils';
 import {CommitteeID} from "./committee";
 import {DEFAULT_TIMER, TimerData, Unit} from "./time";
 import {DEFAULT_SPEAKER_TIME_SECONDS, DEFAULT_CAUCUS_TIME_SECONDS} from "./constants";
+import {DropdownItemProps} from "semantic-ui-react"
 
 export function recoverUnit(caucus?: CaucusData): Unit {
   return caucus ? (caucus.speakerUnit || Unit.Seconds) : Unit.Seconds;
@@ -38,10 +39,14 @@ export interface CaucusData {
   history?: Record<string, SpeakerEvent>;
 }
 
-export const CAUCUS_STATUS_OPTIONS = [
+/*export const CAUCUS_STATUS_OPTIONS = [
   CaucusStatus.Open,
   CaucusStatus.Closed
-].map(makeDropdownOption);
+].map(makeDropdownOption);*/
+export const CAUCUS_STATUS_OPTIONS: DropdownItemProps[] = [
+  {key: CaucusStatus.Open, value: CaucusStatus.Open, text: "Đang mở"},
+  {key: CaucusStatus.Closed, value: CaucusStatus.Closed, text: "Đã đóng"},
+];
 
 export enum Stance {
   For = 'For',

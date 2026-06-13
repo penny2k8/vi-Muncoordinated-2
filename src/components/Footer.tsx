@@ -7,7 +7,7 @@ interface State {
   latestVersion?: string;
 }
 
-export const CLIENT_VERSION = 'v2.20.25-vi';
+export const CLIENT_VERSION = 'v2.20.50-vi';
 
 export function VersionLink(props: { 
   version: string 

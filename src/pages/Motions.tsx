@@ -457,7 +457,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
             negative
             onClick={() => motionFref.child('deleted').set(true)}
           >
-            Delete
+            Xóa
           </Button>
           {recoverSettings(committee).motionVotes && renderVoteCount()}
           {approvable(type) && <Button 

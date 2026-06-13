@@ -158,7 +158,7 @@ export default class Resolution extends React.Component<Props, State> {
 
     const newCaucus: CaucusData = {
       ...DEFAULT_CAUCUS,
-      name: `Amendment by ${amendment.proposer}`,
+      name: `Chỉnh sửa do ${amendment.proposer} đề xuất`,
       topic: text,
       speaking: {
         duration: DEFAULT_CAUCUS.speakerTimer.remaining,
@@ -491,7 +491,7 @@ export default class Resolution extends React.Component<Props, State> {
           <Grid columns="equal">
             {renderCount('tán thành', 'green', 'plus', fors)}
             {renderCount('không tán thành', 'red', 'remove', againsts)}
-            {renderCount('phiếu trắng', 'yellow', 'minus', abstains)}
+            {renderCount('bỏ phiếu trắng', 'yellow', 'minus', abstains)}
           </Grid>
           {resolutionPassed && <Statistic inverted>
             <Statistic.Value>Thông qua</Statistic.Value>

@@ -58,31 +58,31 @@ export const actionName = (motionType: MotionType): string => {
   switch (motionType) {
     case MotionType.ExtendUnmoderatedCaucus:
     case MotionType.ExtendModeratedCaucus:
-      return 'Extend';
+      return 'Kéo dài';
     case MotionType.CloseModeratedCaucus:
     case MotionType.CloseDebate:
-      return 'Close';
+      return 'Đóng';
     case MotionType.OpenUnmoderatedCaucus:
     case MotionType.OpenDebate:
     case MotionType.OpenModeratedCaucus:
-      return 'Open';
+      return 'Mở';
     case MotionType.IntroduceDraftResolution:
     case MotionType.IntroduceAmendment:
     case MotionType.AddWorkingPaper:
-      return 'Introduce';
+      return 'Giới thiệu';
     case MotionType.SuspendDraftResolutionSpeakersList:
     case MotionType.SuspendDebate:
-      return 'Suspend';
+      return 'Tạm dừng';
     case MotionType.ResumeDebate:
-      return 'Resume';
+      return 'Tiếp tục';
     case MotionType.ReorderDraftResolutions:
-      return 'Reorder';
+      return 'Sắp xếp lại';
     case MotionType.ProposeStrawpoll:
-      return 'Create';
+      return 'Tạo';
     case MotionType.VoteOnResolution:
-      return 'Vote';
+      return 'Biểu quyết';
     default:
-      return 'Enact';
+      return 'Thực hiện';
   }
 };
 export const approvable = (motionType: MotionType): boolean => {

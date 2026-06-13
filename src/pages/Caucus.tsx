@@ -256,7 +256,7 @@ export function NextSpeaking(props: {
       {button}
       <Popup
         trigger={interlaceButton}
-        content="Sắp xếp danh sách lượt nói theo thứ tự 'Ủng hộ', 'Trung lập' rồi 'Phản đối' "
+        content="Sắp xếp danh sách lượt nói theo thứ tự 'Ủng hộ', 'Phản đối' rồi 'Trung lập' "
       />
       <SpeakerFeed
         data={caucus ? caucus.queue : undefined}
@@ -276,6 +276,16 @@ function StanceIcon(props: { stance: Stance }) {
       return <Icon name="thumbs down outline"/>;
     default:
       return <Icon name="hand point right outline"/>;
+  }
+}
+function StanceLabel(props: { stance: Stance }) {
+  switch (props.stance) {
+    case Stance.For:
+      return "Ủng hộ";
+    case Stance.Against:
+      return "Phản đối";
+    case Stance.Neutral:
+      return "Trung lập";
   }
 }
 
@@ -325,12 +335,12 @@ class SpeakerFeedEntry extends React.PureComponent<{
             {data && <Flag name={nameToFlagCode(data.who)}/>}
             {data ? data.who : ''}
           </Feed.User>
-          <Feed.Date>{data ? data.duration.toString() + ' seconds' : ''}</Feed.Date>
+          <Feed.Date>{data ? data.duration.toString() + ' giây' : ''}</Feed.Date>
         </Feed.Summary>
         <Feed.Meta>
           <Feed.Like>
             {data && <StanceIcon stance={data.stance}/>}
-            {data ? data.stance : ''}
+            {data && <StanceLabel stance={data.stance}/>}
           </Feed.Like>
           {data && <Label size="mini" as="a" onClick={() => fref.remove()}>
             Xóa

@@ -30,6 +30,14 @@ export interface MemberOption {
 
 export function nameToFlagCode(name: string): FlagNames {
 
+  if (name === 'South Sudan') {
+    return 'fm';
+  }
+
+  if (name === 'Timor-Leste') {
+    return 'tl';
+  }
+
   if (FLAG_NAME_SET.has(name)) {
     const index = FLAG_NAME_ARRAY.indexOf(name);
     const code = FLAG_CODE_ARRAY[index];

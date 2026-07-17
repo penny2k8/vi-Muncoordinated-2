@@ -89,7 +89,7 @@ class DesktopContainer extends React.Component<DesktopContainerProps, DesktopCon
       <>
       <style>{mediaStyles}</style>
       <MediaContextProvider>
-          <Segment as={Media} basic greaterThanOrEqual="tablet" style={{padding: 0}}>
+          <Segment as={Media} basic greaterThanOrEqual="tablet" style={{padding: 0, margin: 0}}>
             <Menu fluid size="small">
               {menu}
             </Menu>
@@ -130,7 +130,7 @@ class MobileContainer extends React.Component<MobileContainerProps, MobileContai
     <>
     <style>{mediaStyles}</style>
     <MediaContextProvider>
-      <Segment as={Media} basic at="mobile">
+      <Segment as={Media} basic at="mobile" style={{padding: 0, margin: 0}}>
         <Sidebar.Pushable>
           <Sidebar as={Menu} animation="uncover" stackable visible={sidebarOpened}>
             {menu}
@@ -410,7 +410,7 @@ export default class Committee extends React.Component<Props, State> {
           <List.Item>
             <Input
               label="Hội nghị"
-              value={committee ? (committee.conference || '') : ''}
+              value={committee ? committee.conference : ''}
               onChange={fieldHandler<CommitteeData>(committeeFref, 'conference')}
               fluid
               loading={!committee}

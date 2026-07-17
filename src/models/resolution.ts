@@ -61,7 +61,7 @@ export const DEFAULT_RESOLUTION: ResolutionData = {
   amendments: {} as Record<AmendmentID, AmendmentData>,
   votes: {} as Votes,
   amendmentsArePublic: false,
-  requiredMajority: Majority.Simple
+  requiredMajority: Majority.TwoThirds
 };
 
 export const voteOnResolution = (

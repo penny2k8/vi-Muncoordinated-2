@@ -98,6 +98,8 @@ interface State {
   authUnsubscribe?: () => void;
   user?: firebase.User | null;
   loading: boolean;
+  showResult: boolean,
+  showCount: boolean
 }
 
 export default class Resolution extends React.Component<Props, State> {
@@ -108,6 +110,8 @@ export default class Resolution extends React.Component<Props, State> {
 
     this.state = {
       committeeFref: firebase.database().ref('committees').child(match.params.committeeID),
+      showResult: false,
+      showCount: false,
       loading: true
     };
   }
@@ -489,28 +493,32 @@ export default class Resolution extends React.Component<Props, State> {
             {columns}
           </Grid>
           <Grid columns="equal">
-            {renderCount('tán thành', 'green', 'plus', fors)}
-            {renderCount('không tán thành', 'red', 'remove', againsts)}
-            {renderCount('bỏ phiếu trắng', 'yellow', 'minus', abstains)}
+            {this.state.showCount && renderCount('tán thành', 'green', 'plus', fors)}
+            {this.state.showCount && renderCount('không tán thành', 'red', 'remove', againsts)}
+            {this.state.showCount && renderCount('bỏ phiếu trắng', 'yellow', 'minus', abstains)}
           </Grid>
-          {resolutionPassed && <Statistic inverted>
+          {this.state.showResult && resolutionPassed && <Statistic inverted>
             <Statistic.Value>Thông qua</Statistic.Value>
             <Statistic.Label>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
             {requiredMajority === Majority.TwoThirdsNoAbstentions &&
               <Statistic.Label>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
             }
           </Statistic>}
-          {resolutionFailed && <Statistic inverted>
+          {this.state.showResult && resolutionFailed && <Statistic inverted>
             <Statistic.Value>Không thông qua</Statistic.Value>
             <Statistic.Label>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
           </Statistic>}
-          {resolutionVetoed && <Statistic inverted>
+          {this.state.showResult && resolutionVetoed && <Statistic inverted>
             <Statistic.Value>Phủ quyết</Statistic.Value>
             <Statistic.Label>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
           </Statistic>}
           <Segment inverted>
             {this.renderMajoritySelector(resolution)}
           </Segment>
+          <Grid columns="equal">
+            <Grid.Column textAlign="right"><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button></Grid.Column>
+            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => this.setState({ showResult: !this.state.showResult })}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>
+           </Grid>
         </Segment>
         {this.renderStats()}
       </>
@@ -765,7 +773,7 @@ export default class Resolution extends React.Component<Props, State> {
     return (
       <Container style={{ 'padding-bottom': '2em' }}>
         <Helmet>
-          <title>{`${resolution?.name} - vi-  Muncoordinated`}</title>
+          <title>{`${resolution?.name} - vi-Muncoordinated`}</title>
         </Helmet>
         <Grid columns="equal" stackable>
           <Grid.Row>

@@ -103,7 +103,6 @@ interface State {
 }
 
 export default class Resolution extends React.Component<Props, State> {
-nhaPhoCo = false;
 
   constructor(props: Props) {
     super(props);
@@ -455,12 +454,7 @@ nhaPhoCo = false;
     const resolutionVetoed = !!vetoes[0];
 
   if (resolutionVetoed && !this.state.showResult) {
-    this.nhaPhoCo = true;
     this.setState({ showResult: true });
-  }
-
-  if (!resolutionVetoed) {
-    this.nhaPhoCo = false;
   }
     const votesByVoters = Object.keys(votes || {})
       .filter(k => sortedPresentAndCanVote.includes(k))
@@ -478,7 +472,7 @@ nhaPhoCo = false;
     const threshold = getThreshold(requiredMajority, committee, fors, againsts);
     const thresholdName = getThresholdName(requiredMajority);
 
-    const votingNotDone: boolean = remaining != 0 && !resolution;
+    const votingNotDone: boolean = remaining != 0 && !resolutionVetoed;
     const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed && !votingNotDone; 
     const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed && !votingNotDone;
 
@@ -531,7 +525,7 @@ nhaPhoCo = false;
           </Segment>
           <Grid columns="equal">
             <Grid.Column textAlign="right"><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button></Grid.Column>
-            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => {this.nhaPhoCo = false; this.setState({ showResult: !this.state.showResult });}}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>            
+            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => this.setState({ showResult: !this.state.showResult })}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>            
            </Grid>
         </Segment>
         {this.renderStats()}

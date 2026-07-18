@@ -29,3 +29,7 @@ input[type="text"]{
 .ui.list .header {
   font-family: 'Be Vietnam Pro', sans-serif !important;
 }
+.ui.statistic.label .ui.statistic.value
+{
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}

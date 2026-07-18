@@ -103,6 +103,8 @@ interface State {
 }
 
 export default class Resolution extends React.Component<Props, State> {
+nhaPhoCo = false;
+
   constructor(props: Props) {
     super(props);
 
@@ -452,6 +454,14 @@ export default class Resolution extends React.Component<Props, State> {
 
     const resolutionVetoed = !!vetoes[0];
 
+  if (resolutionVetoed && !this.state.showResult) {
+    this.nhaPhoCo = true;
+    this.setState({ showResult: true });
+  }
+
+  if (!resolutionVetoed) {
+    this.nhaPhoCo = false;
+  }
     const votesByVoters = Object.keys(votes || {})
       .filter(k => sortedPresentAndCanVote.includes(k))
       .map(k => votes[k]);
@@ -468,8 +478,9 @@ export default class Resolution extends React.Component<Props, State> {
     const threshold = getThreshold(requiredMajority, committee, fors, againsts);
     const thresholdName = getThresholdName(requiredMajority);
 
-    const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed; 
-    const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed;
+    const votingNotDone: boolean = remaining != 0 && !resolution;
+    const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed && !votingNotDone; 
+    const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed && !votingNotDone;
 
     const COLUMNS = 3;
     const ROWS = Math.ceil(sortedPresentAndCanVote.length / COLUMNS);
@@ -497,26 +508,30 @@ export default class Resolution extends React.Component<Props, State> {
             {this.state.showCount && renderCount('bỏ phiếu trắng', 'yellow', 'minus', abstains)}
           </Grid>
           {this.state.showResult && resolutionPassed && <Statistic inverted>
-            <Statistic.Value>Thông qua</Statistic.Value>
-            <Statistic.Label>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Thông qua</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
             {requiredMajority === Majority.TwoThirdsNoAbstentions &&
-              <Statistic.Label>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
+              <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
             }
           </Statistic>}
           {this.state.showResult && resolutionFailed && <Statistic inverted>
-            <Statistic.Value>Không thông qua</Statistic.Value>
-            <Statistic.Label>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Không thông qua</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
           </Statistic>}
-          {this.state.showResult && resolutionVetoed && <Statistic inverted>
-            <Statistic.Value>Phủ quyết</Statistic.Value>
-            <Statistic.Label>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
+          {resolutionVetoed && <Statistic inverted>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Phủ quyết</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
+          </Statistic>}
+          {this.state.showResult && votingNotDone && <Statistic inverted>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Chưa hoàn thành</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "normal"}}>Còn <strong style={{ fontWeight: "bold" }}>{remaining}</strong> đại biểu chưa biểu quyết, hãy hoàn thành quy trình biểu quyết</Statistic.Label>
           </Statistic>}
           <Segment inverted>
             {this.renderMajoritySelector(resolution)}
           </Segment>
           <Grid columns="equal">
             <Grid.Column textAlign="right"><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button></Grid.Column>
-            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => this.setState({ showResult: !this.state.showResult })}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>
+            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => {this.nhaPhoCo = false; this.setState({ showResult: !this.state.showResult });}}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>            
            </Grid>
         </Segment>
         {this.renderStats()}

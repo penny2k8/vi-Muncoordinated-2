@@ -760,7 +760,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
             canVote={motionVotes}
             canPropose={motionsArePublic} />}
         <Divider />
-        <Icon name="sort numeric ascending" /> Được sắp xếp theo độ ảnh hưởng tăng dần. Cần {operative} phiếu để thông qua
+        <Icon name="sort numeric ascending" /> Được sắp xếp theo mức độ ảnh hưởng tăng dần. Cần {operative} phiếu để thông qua
         <Button
           negative
           disabled={renderedMotions.length <= 0}

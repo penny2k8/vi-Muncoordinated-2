@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createMedia } from '@artsy/fresnel';
 import {
   Button,
   Container,
@@ -17,6 +18,19 @@ import { logClickCreateACommitteeButton, logClickLogInButton, logClickSignupButt
 import Loading from '../components/Loading';
 import { ShareCapabilities } from '../components/share-hints';
 
+const HomepageMedia = createMedia({
+  breakpoints: {
+    mobile: 320,
+    tablet: 768,
+    computer: 992,
+    largeScreen: 1200,
+    widescreen: 1920,
+  },
+});
+
+const homepageMediaStyles = HomepageMedia.createMediaStyle();
+const { Media, MediaContextProvider } = HomepageMedia;
+
 interface HomepageHeadingProps {
   mobile: boolean;
 }
@@ -29,7 +43,7 @@ const REPO_LINK_NEW = 'https://github.com/penny2k8/vi-Muncoordinated-2';
  * such things.
  */
 const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
-  <Container text>
+  <Container text style={{ maxWidth: '100%', padding: '0 1em' }}>
     <Header
       as="h1"
       content="vi-Muncoordinated"
@@ -39,6 +53,8 @@ const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
         fontWeight: 'normal',
         marginBottom: 0,
         marginTop: mobile ? '1.5em' : '3em',
+        overflowWrap: 'break-word',
+        wordBreak: 'break-word',
       }}
     />
     <Header
@@ -46,9 +62,11 @@ const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
       content="Phần mềm quản lý hội đồng dành cho các hội nghị mô phỏng Liên Hợp Quốc - phiên bản Việt hóa"
       inverted
       style={{
-        fontSize: mobile ? '1.5em' : '1.7em',
+        fontSize: mobile ? '1.25em' : '1.7em',
         fontWeight: 'normal',
         marginTop: mobile ? '0.5em' : '1.5em',
+        overflowWrap: 'break-word',
+        wordBreak: 'break-word',
       }}
     />
     <br />
@@ -99,7 +117,7 @@ class DesktopContainer extends React.Component<DesktopContainerProps, DesktopCon
       <>
       {/* @ts-ignore */}
         <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment inverted textAlign="center" style={{ minHeight: 700, padding: '1em 0em' }} vertical>
+          <Segment inverted textAlign="center" style={{ minHeight: 700, padding: '1em 0em', width: '100%' }} vertical>
             <Menu
               fixed={fixed ? 'top' : undefined}
               inverted={!fixed}
@@ -136,73 +154,85 @@ interface MobileContainerState {
   sidebarOpened: boolean;
 }
 
-// class MobileContainer extends React.Component<MobileContainerProps, MobileContainerState> {
-//   constructor(props: MobileContainerProps) {
-//     super(props);
+class MobileContainer extends React.Component<MobileContainerProps, MobileContainerState> {
+  constructor(props: MobileContainerProps) {
+    super(props);
 
-//     this.state = {
-//       sidebarOpened: false
-//     };
-//   }
+    this.state = {
+      sidebarOpened: false
+    };
+  }
 
-//   handlePusherClick = () => {
-//     const { sidebarOpened } = this.state;
+  handlePusherClick = () => {
+    const { sidebarOpened } = this.state;
 
-//     if (sidebarOpened) {
-//       this.setState({ sidebarOpened: false });
-//     }
-//   }
+    if (sidebarOpened) {
+      this.setState({ sidebarOpened: false });
+    }
+  }
 
-//   handleToggle = () => {
-//     this.setState({ sidebarOpened: !this.state.sidebarOpened });
-//   }
+  handleToggle = () => {
+    this.setState({ sidebarOpened: !this.state.sidebarOpened });
+  }
 
-//   render() {
-//     const { children } = this.props;
-//     const { sidebarOpened } = this.state;
+  render() {
+    const { children } = this.props;
+    const { sidebarOpened } = this.state;
 
-//     return (
-//       <>
-//         <Sidebar.Pushable>
-//           <Sidebar as={Menu} animation="push" inverted vertical visible={sidebarOpened}>
-//             <Menu.Item as="a" active>Home</Menu.Item>
-//             <Menu.Item as="a" href="/onboard">Log in</Menu.Item>
-//             <Menu.Item as="a" href="/onboard">Sign up</Menu.Item>
-//           </Sidebar>
+    return (
+      <>
+        <Sidebar.Pushable>
+          <Sidebar as={Menu} animation="push" inverted vertical visible={sidebarOpened}>
+            <Menu.Item as="a" active>Home</Menu.Item>
+            <Menu.Item as="a" href="/onboard" onClick={logClickLogInButton}>Đăng nhập</Menu.Item>
+            <Menu.Item as="a" href="/onboard" onClick={logClickSignupButton}>Đăng ký</Menu.Item>
+          </Sidebar>
 
-//           <Sidebar.Pusher dimmed={sidebarOpened} onClick={this.handlePusherClick} style={{ minHeight: '100vh' }}>
-//             <Segment inverted textAlign="center" style={{ minHeight: 350, padding: '1em 0em' }} vertical>
-//               <Container>
-//                 <Menu inverted pointing secondary size="large">
-//                   <Menu.Item onClick={this.handleToggle}>
-//                     <Icon name="sidebar" />
-//                   </Menu.Item>
-//                   <Menu.Item position="right">
-//                     <Button as="a" inverted href="/onboard" >Log in</Button>
-//                     <Button as="a" inverted href="/onboard" style={{ marginLeft: '0.5em' }}>Sign Up</Button>
-//                   </Menu.Item>
-//                 </Menu>
-//               </Container>
-//               <HomepageHeading mobile={true} />
-//             </Segment>
+          <Sidebar.Pusher dimmed={sidebarOpened} onClick={this.handlePusherClick} style={{ minHeight: '100vh' }}>
+            <Segment inverted textAlign="center" style={{ minHeight: 350, padding: '1em 0em', width: '100%' }} vertical>
+              <Container>
+                <Menu inverted pointing secondary size="large">
+                  <Menu.Item onClick={this.handleToggle}>
+                    <Icon name="sidebar" />
+                  </Menu.Item>
+                  <Menu.Item as="a" active>Trang chủ</Menu.Item>
+                  <Menu.Item position="right">
+                    <Button as="a" inverted size="small" href="/onboard" onClick={logClickLogInButton}>
+                      Đăng nhập
+                    </Button>
+                    <Button as="a" inverted primary size="small" href="/onboard" style={{ marginLeft: '0.5em' }} onClick={logClickSignupButton}>
+                      Đăng ký
+                    </Button>
+                  </Menu.Item>
+                </Menu>
+              </Container>
+              <HomepageHeading mobile={true} />
+            </Segment>
 
-//             {children}
-//           </Sidebar.Pusher>
-//         </Sidebar.Pushable>
-//         </> 
-//     );
-//   }
-// }
+            {children}
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </>
+    );
+  }
+}
 
 interface ResponsiveContainerProps {
   children?: React.ReactNode;
 }
 
 const ResponsiveContainer = ({ children }: ResponsiveContainerProps) => (
-  <React.Fragment>
-    <DesktopContainer>{children}</DesktopContainer>
-    {/* <MobileContainer>{children}</MobileContainer> */}
-  </React.Fragment>
+  <>
+    <style>{homepageMediaStyles}</style>
+    <MediaContextProvider>
+      <Media greaterThanOrEqual="tablet">
+        <DesktopContainer>{children}</DesktopContainer>
+      </Media>
+      <Media at="mobile">
+        <MobileContainer>{children}</MobileContainer>
+      </Media>
+    </MediaContextProvider>
+  </>
 );
 
 export default class Homepage extends React.Component<{}, { 
@@ -219,11 +249,11 @@ export default class Homepage extends React.Component<{}, {
       <Statistic.Group textAlign="center">
         <Statistic>
           <Statistic.Value>{this.state.committeeNo || <Loading small />}</Statistic.Value>
-          <Statistic.Label>Committees created</Statistic.Label>
+          <Statistic.Label>Hội đồng đã tạo</Statistic.Label>
         </Statistic>
         <Statistic>
           <Statistic.Value>{this.state.delegateNo || <Loading small />}</Statistic.Value>
-          <Statistic.Label>Delegates participating</Statistic.Label>
+          <Statistic.Label>Đại biểu tham gia</Statistic.Label>
         </Statistic>
       </Statistic.Group>
     );
@@ -232,8 +262,9 @@ export default class Homepage extends React.Component<{}, {
   render() {
     return (
       <ResponsiveContainer>
-        <Segment style={{ padding: '3em 0em' }} vertical>
-          <Grid container stackable verticalAlign="middle">
+        <Segment style={{ padding: '3em 0em', width: '100%' }} vertical>
+          <Container>
+          <Grid stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={8}>
                 <Header as="h3" style={{ fontSize: '2em' }}>Tính hợp tác cao</Header>
@@ -259,7 +290,7 @@ export default class Homepage extends React.Component<{}, {
                 <Image
                   bordered
                   rounded
-                  size="massive"
+                  fluid
                   src="/promo.png"
                 />
               </Grid.Column>
@@ -301,6 +332,7 @@ export default class Homepage extends React.Component<{}, {
               </Grid.Column>
             </Grid.Row>
           </Grid>
+          </Container>
         </Segment>
         <Segment inverted vertical style={{ padding: '5em 0em' }}>
           <Container>

@@ -2,7 +2,7 @@
 i.flag.aq:not(.icon):before {
   background-image: none;
   content: '🇦🇶';
-
+}
 body,
 .ui {
   font-family: 'Be Vietnam Pro', sans-serif !important;

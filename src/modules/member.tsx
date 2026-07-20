@@ -61,7 +61,6 @@ export function nameToCountryOption(name: string): MemberOption | undefined {
 export function canonicalCountryName(name: string): string {
   return nameToCountryOption(name)?.text ?? name;
 }
-export function nameToFlagCode(name: string): FlagNames {
 
 export function searchCountryOptions(
   options: DropdownItemProps[],

@@ -84,13 +84,13 @@ export function recoverResolution(committee: CommitteeData | undefined, resoluti
 export type CommitteeID = string;
 
 export enum Template {
-  AfricanUnion = 'African Union',
-  ASEAN = 'Association of Southeast Asian Nations',
+  AfricanUnion = 'Liên minh châu Phi',
+  ASEAN = 'Hiệp hội các quốc gia Đông Nam Á',
   BRICS = 'BRICS',
-  EU = 'European Union',
+  EU = 'Liên Minh châu Âu',
   G20 = 'G20',
-  NATO = 'North Atlantic Treaty Organization',
-  SecurityCouncil = 'UN Security Council',
+  NATO = 'Tổ chức Hiệp ước Bắc Đại Tây Dương',
+  SecurityCouncil = 'Hội đồng Bảo an Liên Hợp Quốc',
   // TODO: Support these templates against at some point
   // UNHRC = 'UN Human Rights Council',
   // UNICEF = 'UN Children\'s Fund',
@@ -101,7 +101,7 @@ export interface CommitteeData {
   name: string;
   chair: string;
   topic: string;
-  conference: string;
+  conference?: string; // TODO: Migrate
   template?: Template;
   creatorUid: firebase.UserInfo['uid'];
   members?: Record<MemberID, MemberData>;
@@ -116,7 +116,7 @@ export interface CommitteeData {
 }
 
 const GENERAL_SPEAKERS_LIST: CaucusData = {
-  ...DEFAULT_CAUCUS, name: 'General Speakers\' List'
+  ...DEFAULT_CAUCUS, name: 'Danh sách phát biểu chung'
 };
 export const DEFAULT_COMMITTEE: CommitteeData = {
   name: '',
@@ -219,7 +219,8 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
   name: MemberData['name']
   rank?: Rank // not allowed to use members due to import order
 }[]> = {
-  'African Union': [
+  'Liên minh châu Phi': [
+    {name: 'Ai Cập'},
     {name: 'Algeria'},
     {name: 'Angola'},
     {name: 'Benin'},
@@ -228,23 +229,20 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Burundi'},
     {name: 'Cameroon'},
     {name: 'Cabo Verde'},
-    {name: 'Central African Republic'},
+    {name: 'Cộng hòa Trung Phi'},
     {name: 'Chad'},
     {name: 'Comoros'},
-    {name: 'Democratic Republic of the Congo'},
-    {name: 'Republic of the Congo'},
-    {name: "Côte d'Ivoire"},
+    {name: 'Cộng hòa Congo'},
+    {name: 'CHDC Congo'},
+    {name: 'Bờ Biển Ngà'},
     {name: 'Djibouti'},
-    {name: 'Egypt'},
     {name: 'Equatorial Guinea'},
     {name: 'Eritrea'},
-    {name: 'Eswatini'},
     {name: 'Ethiopia'},
     {name: 'Gabon'},
-    {name: 'Gambia'},
     {name: 'Ghana'},
-    {name: 'Guinea'},
     {name: 'Guinea-Bissau'},
+    {name: 'Guinea'},
     {name: 'Kenya'},
     {name: 'Lesotho'},
     {name: 'Liberia'},
@@ -262,32 +260,27 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Rwanda'},
     {name: 'Sao Tome and Principe'},
     {name: 'Senegal'},
-    {name: 'Seychelles'},
     {name: 'Sierra Leone'},
-    {name: 'Somalia'},
-    {name: 'South Africa'},
-    {name: 'South Sudan'},
     {name: 'Sudan'},
     {name: 'United Republic of Tanzania'},
     {name: 'Togo'},
     {name: 'Tunisia'},
     {name: 'Uganda'},
-    {name: 'Western Sahara'},
     {name: 'Zambia'},
     {name: 'Zimbabwe'}
   ],
-  'Association of Southeast Asian Nations': [
+  'Hiệp hội các quốc gia Đông Nam Á': [
     {name: 'Brunei Darussalam'},
-    {name: 'Cambodia'},
+    {name: 'Campuchia'},
     {name: 'Indonesia'},
-    {name: "Lao People's Democratic Republic"},
+    {name: 'Lào'},
     {name: 'Malaysia'},
     {name: 'Myanmar'},
     {name: 'Philippines'},
     {name: 'Singapore'},
-    {name: 'Thailand'},
+    {name: 'Thái Lan'},
     {name: 'Timor-Leste'},
-    {name: 'Viet Nam'}
+    {name: 'Việt Nam'}
   ],
   'BRICS': [
     {name: 'Brazil'},
@@ -300,95 +293,96 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Russian Federation'},
     {name: 'Saudi Arabia'},
     {name: 'South Africa'},
-    {name: 'United Arab Emirates'}
+    {name: 'Các tiểu Vương quốc Arab Thống nhất'}
+
   ],
-  'European Union': [
-    {name: 'Austria'},
-    {name: 'Belgium'},
+  'Liên Minh châu Âu': [
+    {name: 'Áo'},
+    {name: 'Bỉ'},
     {name: 'Bulgaria'},
     {name: 'Croatia'},
     {name: 'Cyprus'},
-    {name: 'Czechia'},
-    {name: 'Denmark'},
+    {name: 'Cộng hòa Séc'},
+    {name: 'Đan Mạch'},
     {name: 'Estonia'},
-    {name: 'Finland'},
-    {name: 'France'},
-    {name: 'Germany'},
-    {name: 'Greece'},
+    {name: 'Phần Lan'},
+    {name: 'Pháp'},
+    {name: 'Đức'},
+    {name: 'Hy Lạp'},
     {name: 'Hungary'},
     {name: 'Ireland'},
-    {name: 'Italy'},
+    {name: 'Ý'},
     {name: 'Latvia'},
     {name: 'Lithuania'},
     {name: 'Luxembourg'},
     {name: 'Malta'},
-    {name: 'Netherlands'},
-    {name: 'Poland'},
-    {name: 'Portugal'},
+    {name: 'Hà Lan'},
+    {name: 'Ba Lan'},
+    {name: 'Bồ Đào Nha'},
     {name: 'Romania'},
     {name: 'Slovakia'},
     {name: 'Slovenia'},
-    {name: 'Spain'},
-    {name: 'Sweden'},
+    {name: 'Tây Ban Nha'},
+    {name: 'Thụy Điển'},
   ],
   'G20': [
-    {name: 'African Union'},
     {name: 'Argentina'},
     {name: 'Australia'},
     {name: 'Brazil'},
     {name: 'Canada'},
-    {name: 'China'},
-    {name: 'European Union'},
-    {name: 'France'},
-    {name: 'Germany'},
-    {name: 'India'},
+    {name: 'Trung Quốc'},
+    {name: 'Liên minh châu Âu'},
+    {name: 'Pháp'},
+    {name: 'Đức'},
+    {name: 'Ấn Độ'},
     {name: 'Indonesia'},
-    {name: 'Italy'},
-    {name: 'Japan'},
+    {name: 'Ý'},
+    {name: 'Nhật Bản'},
     {name: 'Mexico'},
-    {name: 'Russian Federation'},
-    {name: 'Saudi Arabia'},
-    {name: 'South Africa'},
-    {name: 'Republic of Korea'},
-    {name: 'Türkiye'},
-    {name: 'United Kingdom'},
-    {name: 'United States of America'},
+    {name: 'Nga'},
+    {name: 'Ả-rập Xê-út'},
+    {name: 'Nam Phi'},
+    {name: 'Hàn Quốc'},
+    {name: 'Thổ Nhĩ Kỳ'},
+    {name: 'Vương quốc Anh'},
+    {name: 'Hoa Kỳ'},
   ],
-  'North Atlantic Treaty Organization': [
+  'Tổ chức Hiệp ước Bắc Đại Tây Dương': [
     {name: 'Albania'},
-    {name: 'Belgium'},
+    {name: 'Bỉ'},
     {name: 'Bulgaria'},
     {name: 'Canada'},
     {name: 'Croatia'},
-    {name: 'Czechia'},
-    {name: 'Denmark'},
-    {name: 'United Kingdom'},
+    {name: 'Cộng hòa Séc'},
+    {name: 'Đan Mạch'},
+    {name: 'Vương quốc Anh'},
     {name: 'Estonia'},
-    {name: 'Finland'}, // since 2023
-    {name: 'France'},
-    {name: 'Germany'},
-    {name: 'Greece'},
+    {name: 'Phần Lan'}, // since 2023
+    {name: 'Pháp'},
+    {name: 'Đức'},
+    {name: 'Hy Lạp'},
     {name: 'Hungary'},
     {name: 'Iceland'},
-    {name: 'Italy'},
+    {name: 'Ý'},
     {name: 'Latvia'},
     {name: 'Lithuania'},
     {name: 'Luxembourg'},
-    {name: 'North Macedonia'},
+    {name: 'Bắc Macedonia'},
     {name: 'Montenegro'},
-    {name: 'Netherlands'},
-    {name: 'Norway'},
-    {name: 'Poland'},
-    {name: 'Portugal'},
+    {name: 'Netherlands Antilles'},
+    {name: 'Hà Lan'},
+    {name: 'Na Uy'},
+    {name: 'Ba Lan'},
+    {name: 'Bồ Đào Nha'},
     {name: 'Romania'},
     {name: 'Slovakia'},
     {name: 'Slovenia'},
     {name: 'Spain'},
     {name: 'Sweden'}, // since 2024
-    {name: 'Türkiye'},
-    {name: 'United States of America'},
+    {name: 'Thổ Nhĩ Kỳ'},
+    {name: 'Hoa Kỳ'},
   ],
-  'UN Security Council': [
+  'Hội đồng Bảo an Liên Hợp Quốc': [
     {name: 'Bahrain'},
     {name: 'China', rank: Rank.Veto},
     {name: 'Colombia'},
@@ -404,6 +398,9 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Somalia'},
     {name: 'United Kingdom', rank: Rank.Veto},
     {name: 'United States of America', rank: Rank.Veto},
+    {name: 'Tây Ban Nha'},
+    {name: 'Thụy Điển'}, // since 2024
+    {name: 'Thổ Nhĩ Kỳ'},
   ],
 }
 export const pushTemplateMembers = (committeeID: CommitteeID, template: Template) => {
@@ -426,7 +423,7 @@ export const pushTemplateMembers = (committeeID: CommitteeID, template: Template
             name: member.name,
             rank: member.rank ?? Rank.Standard,
             present: true,
-            voting: false
+            voting: false,
           })
       );
   });

@@ -54,18 +54,18 @@ const TAB_ORDER = ['feed', 'text', 'amendments', 'voting'];
 export const IDENTITCAL_PROPOSER_SECONDER = (
   <Message
     error
-    content="A resolution's proposer and seconder cannot be the same"
+    content="Đại biểu đề xuất và đại biểu ủng hộ của nghị quyết phải khác nhau"
   />
 );
 
-export const DELEGATES_CAN_AMEND_NOTICE = (
+/*export const DELEGATES_CAN_AMEND_NOTICE = (
   <Message
     basic
     attached="bottom"
   >
     Delegates can create and edit, but not delete, amendments.
   </Message>
-);
+);*/
 
 
 function DeleteResolutionModal(props: { onConfirm: () => void }) {
@@ -75,13 +75,14 @@ function DeleteResolutionModal(props: { onConfirm: () => void }) {
       <Dropdown.Item negative fluid basic
           onClick={() => setIsModalOpen(true)}
       >
-        <Icon name="delete" /> Delete resolution?
+        <Icon name="delete" /> Xóa nghị quyết?
       </Dropdown.Item>
       <Confirm
         open={isModalOpen}
-        header='Delete resolution?'
-        content='Are you sure? This is irreversible and will delete all
-                  posts, text, amendments and voting history. You might want to close the resolution (top right dropdown) instead?'
+        header='Bạn muốn xóa chứ?'
+        content='Toàn bộ bài đăng, văn bản, chỉnh sửa và lịch sử biểu quyết sẽ bị xóa và không thể khôi phục lại.
+        Bạn nên đóng nghị quyết tại dropdown bên tay phải'
+        cancelButton='Hủy'
         onCancel={() => setIsModalOpen(false)}
         onConfirm={() => { setIsModalOpen(false); props.onConfirm() }}
       />
@@ -97,9 +98,12 @@ interface State {
   authUnsubscribe?: () => void;
   user?: firebase.User | null;
   loading: boolean;
+  showResult: boolean,
+  showCount: boolean
 }
 
 export default class Resolution extends React.Component<Props, State> {
+
   constructor(props: Props) {
     super(props);
 
@@ -107,6 +111,8 @@ export default class Resolution extends React.Component<Props, State> {
 
     this.state = {
       committeeFref: firebase.database().ref('committees').child(match.params.committeeID),
+      showResult: false,
+      showCount: false,
       loading: true
     };
   }
@@ -157,7 +163,7 @@ export default class Resolution extends React.Component<Props, State> {
 
     const newCaucus: CaucusData = {
       ...DEFAULT_CAUCUS,
-      name: `Amendment by ${amendment.proposer}`,
+      name: `Chỉnh sửa do ${amendment.proposer} đề xuất`,
       topic: text,
       speaking: {
         duration: DEFAULT_CAUCUS.speakerTimer.remaining,
@@ -217,11 +223,11 @@ export default class Resolution extends React.Component<Props, State> {
     const textArea = (
       <TextArea
         value={text}
-        label="Text"
+        label="Nội dung"
         autoHeight
         onChange={textAreaHandler<AmendmentData>(amendmentFref, 'text')}
         rows={1}
-        placeholder="Text"
+        placeholder="Nội dung"
       />
     );
 
@@ -251,8 +257,8 @@ export default class Resolution extends React.Component<Props, State> {
         search
         selection
         fluid
-        label="Proposer"
-        placeholder="Proposer"
+        label="Đại biểu đề xuất"
+        placeholder="Đại biểu đề xuất"
         onChange={memberDropdownHandler<AmendmentData>(amendmentFref, 'proposer', memberOptions)}
         options={memberOptions}
       />
@@ -263,7 +269,7 @@ export default class Resolution extends React.Component<Props, State> {
         floated="right"
         onClick={() => this.gotoCaucus(amendment!.caucus)}
       >
-        Associated caucus
+        Phiên thảo luận liên quan
         <Icon name="arrow right" />
       </Button>
     ):(
@@ -272,7 +278,7 @@ export default class Resolution extends React.Component<Props, State> {
         disabled={!amendment || amendment.proposer === '' || !hasAuth}
         onClick={() => handleProvisionAmendment(id, amendment!)}
       >
-        Provision caucus
+        Tạo phiên thảo luận
       </Button>
     );
 
@@ -414,7 +420,7 @@ export default class Resolution extends React.Component<Props, State> {
 
     return (
       <Dropdown
-        placeholder="Select majority type"
+        placeholder="Chọn loại đa số"
         search
         options={MAJORITY_OPTIONS}
         onChange={dropdownHandler<ResolutionData>(resolutionFref, 'requiredMajority')}
@@ -447,6 +453,9 @@ export default class Resolution extends React.Component<Props, State> {
 
     const resolutionVetoed = !!vetoes[0];
 
+  if (resolutionVetoed && !this.state.showResult) {
+    this.setState({ showResult: true });
+  }
     const votesByVoters = Object.keys(votes || {})
       .filter(k => sortedPresentAndCanVote.includes(k))
       .map(k => votes[k]);
@@ -463,8 +472,9 @@ export default class Resolution extends React.Component<Props, State> {
     const threshold = getThreshold(requiredMajority, committee, fors, againsts);
     const thresholdName = getThresholdName(requiredMajority);
 
-    const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed; 
-    const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed;
+    const votingNotDone: boolean = remaining != 0 && !resolutionVetoed;
+    const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed && !votingNotDone; 
+    const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed && !votingNotDone;
 
     const COLUMNS = 3;
     const ROWS = Math.ceil(sortedPresentAndCanVote.length / COLUMNS);
@@ -487,28 +497,36 @@ export default class Resolution extends React.Component<Props, State> {
             {columns}
           </Grid>
           <Grid columns="equal">
-            {renderCount('yes', 'green', 'plus', fors)}
-            {renderCount('no', 'red', 'remove', againsts)}
-            {renderCount('abstaining', 'yellow', 'minus', abstains)}
+            {this.state.showCount && renderCount('tán thành', 'green', 'plus', fors)}
+            {this.state.showCount && renderCount('không tán thành', 'red', 'remove', againsts)}
+            {this.state.showCount && renderCount('bỏ phiếu trắng', 'yellow', 'minus', abstains)}
           </Grid>
-          {resolutionPassed && <Statistic inverted>
-            <Statistic.Value>Passed</Statistic.Value>
-            <Statistic.Label>{fors} clears the required {thresholdName} of {threshold}</Statistic.Label>
+          {this.state.showResult && resolutionPassed && <Statistic inverted>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Thông qua</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
             {requiredMajority === Majority.TwoThirdsNoAbstentions &&
-              <Statistic.Label>Further votes may change the result from 'Passed'</Statistic.Label>
+              <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
             }
           </Statistic>}
-          {resolutionFailed && <Statistic inverted>
-            <Statistic.Value>Failed</Statistic.Value>
-            <Statistic.Label>There are insufficient votes remaining to achieve a {thresholdName}</Statistic.Label>
+          {this.state.showResult && resolutionFailed && <Statistic inverted>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Không thông qua</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
           </Statistic>}
           {resolutionVetoed && <Statistic inverted>
-            <Statistic.Value>Vetoed</Statistic.Value>
-            <Statistic.Label>{vetoes[0].name} was the first to veto the resolution</Statistic.Label>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Phủ quyết</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
+          </Statistic>}
+          {this.state.showResult && votingNotDone && <Statistic inverted>
+            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Chưa hoàn thành</Statistic.Value>
+            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "normal"}}>Còn <strong style={{ fontWeight: "bold" }}>{remaining}</strong> đại biểu chưa biểu quyết, hãy hoàn thành quy trình biểu quyết</Statistic.Label>
           </Statistic>}
           <Segment inverted>
             {this.renderMajoritySelector(resolution)}
           </Segment>
+          <Grid columns="equal">
+            <Grid.Column textAlign="right"><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button></Grid.Column>
+            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => this.setState({ showResult: !this.state.showResult })}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>            
+           </Grid>
         </Segment>
         {this.renderStats()}
       </>
@@ -544,7 +562,7 @@ export default class Resolution extends React.Component<Props, State> {
         fluid
         onChange={memberDropdownHandler<ResolutionData>(resolutionFref, 'proposer', memberOptions)}
         options={memberOptions}
-        label="Proposer"
+        label="Đề xuất"
       />
     );
 
@@ -560,7 +578,7 @@ export default class Resolution extends React.Component<Props, State> {
         fluid
         onChange={memberDropdownHandler<ResolutionData>(resolutionFref, 'seconder', memberOptions)}
         options={memberOptions}
-        label="Seconder"
+        label="Ủng hộ"
       />
     );
 
@@ -572,7 +590,7 @@ export default class Resolution extends React.Component<Props, State> {
         disabled={!resolution}
         onClick={() => this.gotoCaucus(resolution!.caucus)}
       >
-        Associated caucus
+      Phiên thảo luận liên quan
         <Icon name="arrow right" />
       </Form.Button>
     ) : (
@@ -582,7 +600,7 @@ export default class Resolution extends React.Component<Props, State> {
           disabled={!resolution || !resolution.proposer || !resolution.seconder || hasError}
           onClick={() => handleProvisionResolution(resolution!)}
         >
-          Provision caucus
+        Tạo phiên thảo luận
         </Form.Button>
       );
 
@@ -594,19 +612,18 @@ export default class Resolution extends React.Component<Props, State> {
             {seconderTree}
             {IDENTITCAL_PROPOSER_SECONDER}
             {provisionTree}
-            <Form.Checkbox
+            {/*<Form.Checkbox
               label="Delegates can amend"
               indeterminate={!resolution}
               toggle
               checked={amendmentsArePublic(resolution)}
               onChange={checkboxHandler<ResolutionData>(resolutionFref, 'amendmentsArePublic')}
-            />
+            />*/}
           </Form>
           {this.renderAdditionalOptions()}
         </Segment>
-        {amendmentsArePublic(resolution) && DELEGATES_CAN_AMEND_NOTICE}
       </React.Fragment>
-    );
+    )
   }
 
   renderText = (resolution?: ResolutionData) => {
@@ -620,7 +637,7 @@ export default class Resolution extends React.Component<Props, State> {
           onChange={textAreaHandler<ResolutionData>(resolutionFref, 'link')}
           attatched="top"
           rows={3}
-          placeholder="Resolution text"
+          placeholder="Nội dung nghị quyết"
         />
       </Form>
     )
@@ -648,7 +665,7 @@ export default class Resolution extends React.Component<Props, State> {
         attatched="top"
         size="massive"
         fluid
-        placeholder="Set resolution name"
+        placeholder="Tên nghị quyết"
       />
     );
   }
@@ -666,7 +683,7 @@ export default class Resolution extends React.Component<Props, State> {
   renderAdditionalOptions = () => {
     return  (
       <Dropdown
-        text='More options'
+        text='Lựa chọn khác'
         className='icon'
       >
       <Dropdown.Menu>
@@ -745,16 +762,16 @@ export default class Resolution extends React.Component<Props, State> {
 
     const panes = [
       {
-        menuItem: 'Feed',
+        menuItem: 'Thông tin',
         render: () => <Tab.Pane>{renderFeed()}</Tab.Pane>
       }, {
-        menuItem: 'Text',
+        menuItem: 'Nội dung',
         render: () => <Tab.Pane>{renderText(resolution)}</Tab.Pane>
       }, {
-        menuItem: 'Amendments',
+        menuItem: 'Chỉnh sửa',
         render: () => <Tab.Pane>{renderAmendmentsGroup(resolution)}</Tab.Pane>
       }, {
-        menuItem: 'Voting',
+        menuItem: 'Biểu quyết',
         render: () => <Tab.Pane>{renderVoting(resolution)}</Tab.Pane>
       }
     ];
@@ -762,7 +779,7 @@ export default class Resolution extends React.Component<Props, State> {
     return (
       <Container style={{ 'padding-bottom': '2em' }}>
         <Helmet>
-          <title>{`${resolution?.name} - Muncoordinated`}</title>
+          <title>{`${resolution?.name} - vi-Muncoordinated`}</title>
         </Helmet>
         <Grid columns="equal" stackable>
           <Grid.Row>

@@ -61,6 +61,7 @@ export function nameToCountryOption(name: string): MemberOption | undefined {
 export function canonicalCountryName(name: string): string {
   return nameToCountryOption(name)?.text ?? name;
 }
+export function nameToFlagCode(name: string): FlagNames {
 
 export function searchCountryOptions(
   options: DropdownItemProps[],
@@ -87,6 +88,12 @@ export function nameToFlagCode(name: string): FlagNames {
     return option.flag as FlagNames;
   }
 
+  if (FLAG_NAME_SET.has(name)) {
+    const index = FLAG_NAME_ARRAY.indexOf(name);
+    const code = FLAG_CODE_ARRAY[index];
+    return code.toLowerCase() as FlagNames;
+  } 
+
   // Federated States of Micronesia looks kinda like the UN flag?
   return 'fm';
 }
@@ -110,3 +117,7 @@ export function nameToMemberOption(name: string): MemberOption {
   return nameToCountryOption(name)
     ?? {key: name, value: name, flag: 'fm', text: name};
 }
+
+const FLAG_NAME_SET = new Set(COUNTRY_OPTIONS.map(x => x.text));
+const FLAG_NAME_ARRAY = COUNTRY_OPTIONS.map(x => x.text);
+const FLAG_CODE_ARRAY = COUNTRY_OPTIONS.map(x => x.flag);

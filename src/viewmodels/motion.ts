@@ -58,31 +58,31 @@ export const actionName = (motionType: MotionType): string => {
   switch (motionType) {
     case MotionType.ExtendUnmoderatedCaucus:
     case MotionType.ExtendModeratedCaucus:
-      return 'Extend';
+      return 'Kéo dài';
     case MotionType.CloseModeratedCaucus:
     case MotionType.CloseDebate:
-      return 'Close';
+      return 'Đóng';
     case MotionType.OpenUnmoderatedCaucus:
     case MotionType.OpenDebate:
     case MotionType.OpenModeratedCaucus:
-      return 'Open';
+      return 'Mở';
     case MotionType.IntroduceDraftResolution:
     case MotionType.IntroduceAmendment:
     case MotionType.AddWorkingPaper:
-      return 'Introduce';
+      return 'Giới thiệu';
     case MotionType.SuspendDraftResolutionSpeakersList:
     case MotionType.SuspendDebate:
-      return 'Suspend';
+      return 'Tạm dừng';
     case MotionType.ResumeDebate:
-      return 'Resume';
+      return 'Tiếp tục';
     case MotionType.ReorderDraftResolutions:
-      return 'Reorder';
+      return 'Sắp xếp lại';
     case MotionType.ProposeStrawpoll:
-      return 'Create';
+      return 'Tạo';
     case MotionType.VoteOnResolution:
-      return 'Vote';
+      return 'Biểu quyết';
     default:
-      return 'Enact';
+      return 'Thực hiện';
   }
 };
 export const approvable = (motionType: MotionType): boolean => {
@@ -142,15 +142,15 @@ export const hasTextArea = (motionType: MotionType): boolean => {
 export const detailLabel = (motionType: MotionType): string => {
   switch (motionType) {
     case MotionType.OpenModeratedCaucus:
-      return 'Topic';
+      return 'Chủ đề';
     case MotionType.IntroduceDraftResolution:
-      return 'Name';
+      return 'Tên';
     case MotionType.IntroduceAmendment:
-      return 'Text';
+      return 'Nội dung';
     case MotionType.ProposeStrawpoll:
-      return 'Question';
+      return 'Vấn đề';
     case MotionType.AddWorkingPaper:
-      return "Task"
+      return "Nội dung"
     default:
       return '';
   }
@@ -170,13 +170,33 @@ export const hasDuration = (motionType: MotionType): boolean => {
 export const showMotionType = (motionType: MotionType, time: string): string => {
   switch (motionType) {
     case MotionType.ExtendUnmoderatedCaucus:
-      return `Extend unmoderated caucus by ${time}`;
+      return `Kéo dài phiên thảo luận mở ${time}`;
     case MotionType.ExtendModeratedCaucus:
-      return `Extend moderated caucus by ${time}`;
+      return `Kéo dài phiên thảo luận kín ${time}`;
     case MotionType.OpenModeratedCaucus:
-      return `${time} moderated caucus`;
+      return `Phiên thảo luận kín dài ${time}`;
     case MotionType.OpenUnmoderatedCaucus:
-      return `${time} unmoderated caucus`;
+      return `Phiên thảo luận mở dài ${time}`;
+    case MotionType.CloseModeratedCaucus:
+      return `Đóng phiên thảo luận kín`;
+    case MotionType.IntroduceDraftResolution:
+      return `Giới thiệu dự thảo nghị quyết`;
+    case MotionType.IntroduceAmendment:
+      return `Giới thiệu sửa đổi dự thảo nghị quyết`;
+    case MotionType.VoteOnResolution:
+      return `Biểu quyết thông qua dự thảo nghị quyết`;
+    case MotionType.OpenDebate:
+      return `Bắt đầu phiên họp`;
+    case MotionType.SuspendDebate:
+      return `Tạm dừng phiên họp`;
+    case MotionType.ResumeDebate:
+      return `Tiếp tục phiên họp`;
+    case MotionType.CloseDebate:
+      return `Kết thúc phiên họp`;
+    case MotionType.ReorderDraftResolutions:
+      return `Sắp xếp lại trình tự dự thảo nghị quyết`
+    case MotionType.AddWorkingPaper:
+      return `Giới thiệu dự thảo tạm thời`;
     default:
       return sentenceCase(motionType ?? 'Unknown type');
   }

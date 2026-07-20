@@ -2,6 +2,17 @@
 i.flag.aq:not(.icon):before {
   background-image: none;
   content: '🇦🇶';
+
+body,
+.ui {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 i.flag.bl:not(.icon):before {
@@ -62,4 +73,23 @@ i.flag.sx:not(.icon):before {
   font-size: 14px;
   font-style: normal;
   line-height: 11px;
+}
+textarea {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.ui.input input::placeholder {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+input[type="text"]{
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.header {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.ui.list .header {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.ui.statistic.label .ui.statistic.value
+{
+  font-family: 'Be Vietnam Pro', sans-serif !important;
 }

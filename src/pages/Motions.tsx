@@ -67,11 +67,11 @@ import {
 import {getSeconds, TimerData, Unit} from "../models/time";
 import {SettingsData} from "../models/settings";
 import { Helmet } from 'react-helmet';
-
+import { unitLabel } from '../models/time';
 const DIVISIBILITY_ERROR = (
   <Message
     error
-    content="Speaker time does not evenly divide the caucus time"
+    content="Thời lượng phát biểu không chia đều cho thời lượng phiên thảo luận"
   />
 );
 
@@ -391,7 +391,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
     const proposerTree = (
       <div>
         <Label horizontal>
-          Proposer
+          Đề xuất
         </Label>
         <Flag name={nameToFlagCode(proposer || '')} /> {proposer}
       </div>
@@ -400,7 +400,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
     const seconderTree = (
       <div>
         <Label horizontal>
-          Seconder
+          Ủng hộ
         </Label>
         <Flag name={nameToFlagCode(seconder || '')} /> {seconder}
       </div>
@@ -409,7 +409,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
     const caucusTargetTree = (
       <div>
         <Label horizontal>
-          Target caucus
+          Phiên thảo luận
         </Label>
         {caucusTargetText}
       </div>
@@ -418,7 +418,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
     const resolutionTargetTree = (
       <div>
         <Label horizontal>
-          Target resolution
+          Nghị quyết
         </Label>
         {resolutionTargetText}
       </div>
@@ -426,8 +426,8 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
 
     const time = hasDuration(type) ?
       hasSpeakers(type)
-        ? `${caucusDuration || 0} ${caucusUnit} / ${speakerDuration || 0} ${speakerUnit} `
-        : `${caucusDuration || 0} ${caucusUnit} `
+        ? `${caucusDuration || 0} ${unitLabel(caucusUnit)} / ${speakerDuration || 0} ${unitLabel(speakerUnit)} `
+        : `${caucusDuration || 0} ${unitLabel(caucusUnit)} `
       : '';
 
     return (
@@ -454,7 +454,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
             negative
             onClick={() => motionFref.child('deleted').set(true)}
           >
-            Delete
+            Xóa
           </Button>
           {recoverSettings(committee).motionVotes && renderVoteCount()}
           {approvable(type) && <Button 
@@ -506,8 +506,8 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
 
     const boxForNames = (
       <Form.Input
-        label="Name"
-        placeholder="Name"
+        label="Tên"
+        placeholder="Tên"
         value={proposal}
         onChange={stateFieldHandler<Props, State>(this, 'newMotion', 'proposal')}
         fluid
@@ -530,7 +530,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         durationValue={speakerDuration ? speakerDuration.toString() : undefined}
         onUnitChange={stateDropdownHandler<Props, State>(this, 'newMotion', 'speakerUnit')}
         onDurationChange={stateValidatedNumberFieldHandler<Props, State>(this, 'newMotion', 'speakerDuration')}
-        label="Speaking time"
+        label="Thời lượng phát biểu"
       />
     );
 
@@ -541,7 +541,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         durationValue={caucusDuration ? caucusDuration.toString() : undefined}
         onUnitChange={stateDropdownHandler<Props, State>(this, 'newMotion', 'caucusUnit')}
         onDurationChange={stateValidatedNumberFieldHandler<Props, State>(this, 'newMotion', 'caucusDuration')}
-        label="Duration"
+        label="Thời lượng"
       />
     );
 
@@ -573,7 +573,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         onChange={stateDropdownHandler<Props, State>(this, 'newMotion', 'caucusTarget')}
         options={caucusOptions}
         icon="search"
-        label="Target caucus"
+        label="Chọn phiên thảo luận"
       />
     );
 
@@ -589,7 +589,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         onChange={stateDropdownHandler<Props, State>(this, 'newMotion', 'resolutionTarget')}
         options={resolutionOptions}
         icon="search"
-        label="Target resolution"
+        label="Nghị quyết"
       />
     );
 
@@ -616,7 +616,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         fluid
         onChange={stateMemberDropdownHandler<Props, State>(this, 'newMotion', 'proposer', memberOptions)}
         options={memberOptions}
-        label="Proposer"
+        label="Đề xuất"
       />
     );
 
@@ -632,7 +632,7 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         fluid
         onChange={stateMemberDropdownHandler<Props, State>(this, 'newMotion', 'seconder', memberOptions)}
         options={memberOptions}
-        label="Seconder"
+        label="Ủng hộ"
       />
     );
 
@@ -643,11 +643,11 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
         error={hasError}
       >
         <Form.Dropdown
-          placeholder="Select type"
+          placeholder="Chọn loại"
           search
           selection
           fluid
-          label="Type"
+          label="Loại kiến nghị"
           icon="search"
           options={MOTION_TYPE_OPTIONS}
           onChange={stateDropdownHandler<Props, State>(this, 'newMotion', 'type')}
@@ -731,42 +731,42 @@ export class MotionsComponent extends React.Component<Props & Hooks, State> {
     return (
       <Container text style={{ padding: '1em 0em' }}>
         <Helmet>
-          <title>{`Motions - Muncoordinated`}</title>
+          <title>{`Kiến nghị - vi-Muncoordinated`}</title>
         </Helmet>
         {renderAdder(committee)}
         <Divider hidden />
-        <Checkbox
-          style={{ 'padding-right': '50px' }}
-          label="Delegates can propose motions"
-          toggle
-          checked={motionsArePublic}
-          onChange={
-            checkboxHandler<SettingsData>(
-              committeeFref.child('settings'),
-              'motionsArePublic')}
+        {/* <Checkbox
+        //  style={{ 'padding-right': '50px' }}
+        //  label="Delegates can propose motions"
+        //  toggle
+        //  checked={motionsArePublic}
+        //  onChange={
+        //    checkboxHandler<SettingsData>(
+        //      committeeFref.child('settings'),
+        //      'motionsArePublic')}
         />
         <Checkbox
-          label="Delegates can vote on motions"
-          toggle
-          checked={motionVotes}
-          onChange={
-            checkboxHandler<SettingsData>(
-              committeeFref.child('settings'),
-              'motionVotes')}
-        />
+         // label="Delegates can vote on motions"
+        //  toggle
+         // checked={motionVotes}
+         // onChange={
+          //  checkboxHandler<SettingsData>(
+           //   committeeFref.child('settings'),
+           //   'motionVotes')}
+        /> */}
         {(motionVotes || motionsArePublic)
           && <MotionsShareHint 
             committeeID={committeeID}
             canVote={motionVotes}
             canPropose={motionsArePublic} />}
         <Divider />
-        <Icon name="sort numeric ascending" /> Sorted from most to least disruptive. {operative} votes required to pass a motion
+        <Icon name="sort numeric ascending" /> Được sắp xếp theo mức độ ảnh hưởng tăng dần. Cần {operative} phiếu để thông qua
         <Button
           negative
           disabled={renderedMotions.length <= 0}
           floated="right"
           icon="eraser"
-          content="Clear"
+          content="Xóa"
           compact
           basic
           onClick={this.handleClearMotions}

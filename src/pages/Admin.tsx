@@ -23,7 +23,7 @@ import {CommitteeData, CommitteeID, pushMember, Template} from '../models/commit
 import { TemplateAdder } from '../components/template';
 import {COUNTRY_OPTIONS} from "../constants";
 import { Helmet } from 'react-helmet';
-
+import {DropdownItemProps} from "semantic-ui-react";
 interface Props extends RouteComponentProps<URLParameters> {
   committee: CommitteeData;
   fref: firebase.database.Reference;
@@ -38,12 +38,19 @@ interface State {
   present: MemberData['present'];
 }
 
-const RANK_OPTIONS = [
+/*const RANK_OPTIONS = [
   Rank.Standard,
   Rank.Veto,
   Rank.NGO,
   Rank.Observer
-].map(makeDropdownOption);
+].map(makeDropdownOption);*/
+
+const RANK_OPTIONS: DropdownItemProps[]= [
+  {key: Rank.Standard, value: Rank.Standard, text: "Tiêu chuẩn"},
+  {key: Rank.Veto, value: Rank.Veto, text: "Phủ quyết"},
+  {key: Rank.NGO, value: Rank.NGO, text: "NGO"},
+  {key: Rank.Observer, value: Rank.Observer, text: "Quan sát viên"},
+]
 
 export default class Admin extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -121,7 +128,7 @@ export default class Admin extends React.Component<Props, State> {
       present: this.state.present,
       voting: this.state.voting
     };
-
+    console.log(this.state.rank);
     pushMember(committeeID, member);
   }
 
@@ -243,9 +250,9 @@ export default class Admin extends React.Component<Props, State> {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell />
-              <Table.HeaderCell>Rank</Table.HeaderCell>
-              <Table.HeaderCell>Present</Table.HeaderCell>
-              <Table.HeaderCell>Voting</Table.HeaderCell>
+              <Table.HeaderCell>Quyền lợi</Table.HeaderCell>
+              <Table.HeaderCell>Có mặt</Table.HeaderCell>
+              <Table.HeaderCell>Biểu quyết</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
@@ -260,7 +267,7 @@ export default class Admin extends React.Component<Props, State> {
         </Table>
         {memberItems.length === 0
           ? <Message error>
-            Add at least one committee member to proceed
+            Thêm ít nhất một thành viên hội đồng để tiếp tục
           </Message>
           : <Button
             as='a'
@@ -268,7 +275,7 @@ export default class Admin extends React.Component<Props, State> {
             primary
             fluid
           >
-            General Speakers' List
+            Danh sách phát biểu chung
               <Icon name="arrow right" />
           </Button>
         }
@@ -282,7 +289,7 @@ export default class Admin extends React.Component<Props, State> {
     return (
       <Container style={{ padding: '1em 0em 1.5em' }}>
         <Helmet>
-          <title>{`Setup - Muncoordinated`}</title>
+          <title>{`Thiết lập - vi-Muncoordinated`}</title>
         </Helmet>
         <Grid columns="2" stackable>
           <Grid.Row>

@@ -1,3 +1,10 @@
+# Preamble
+vi-Muncoordinated is an adaptation of Muncoordinated for the Vietnamese MUN community. It has been removed from the fork network due to complications during the previous syncing process. <br>
+<br>
+New commits to Muncoordinated will be synced through another fork before being merged into the vi-Muncoordinated. <br>
+<br>
+The details below are preserved from the original Muncoordinated repository (certain parts are ommitted to prevent confusion). <br>
+
 # Muncoordinated
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/620aebdc-0c8d-4ef6-873d-cfcd154f8269/deploy-status)](https://app.netlify.com/sites/muncoordinated/deploys)
@@ -96,14 +103,6 @@ You can learn more in the [Vite documentation](https://vitejs.dev/guide/).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-
-### Contributors
-
-This project exists thanks to all the people who contribute. Special thanks to:
-
-- [UQ United Nations Student Association](https://www.facebook.com/UQUNSA/)
-
-
 ## License
 
-[GNU GPLv3](LICENSE) © Maxwell Bo
+[GNU GPLv3](LICENSE)

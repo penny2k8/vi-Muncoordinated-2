@@ -35,7 +35,8 @@ interface HomepageHeadingProps {
   mobile: boolean;
 }
 
-const REPO_LINK = 'https://github.com/MaxwellBo/Muncoordinated-2';
+const REPO_LINK_ORIGINAL = 'https://github.com/MaxwellBo/Muncoordinated-2';
+const REPO_LINK_NEW = 'https://github.com/penny2k8/vi-Muncoordinated-2';
 
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
@@ -45,7 +46,7 @@ const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
   <Container text style={{ maxWidth: '100%', padding: '0 1em' }}>
     <Header
       as="h1"
-      content="Muncoordinated"
+      content="vi-Muncoordinated"
       inverted
       style={{
         fontSize: mobile ? '2em' : '4em',
@@ -58,7 +59,7 @@ const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
     />
     <Header
       as="h2"
-      content="The collaborative browser-based Model UN committee management app"
+      content="Phần mềm quản lý hội đồng dành cho các hội nghị mô phỏng Liên Hợp Quốc - phiên bản Việt hóa"
       inverted
       style={{
         fontSize: mobile ? '1.25em' : '1.7em',
@@ -70,7 +71,7 @@ const HomepageHeading = ({ mobile }: HomepageHeadingProps) => (
     />
     <br />
     <Button as="a" primary size="huge" href="/onboard" onClick={logClickCreateACommitteeButton}>
-      Create a committee
+      Tạo hội đồng mới
       <Icon name="arrow right" />
     </Button>
     <br />
@@ -125,13 +126,13 @@ class DesktopContainer extends React.Component<DesktopContainerProps, DesktopCon
               size="large"
             >
               <Container>
-                <Menu.Item as="a" active>Home</Menu.Item>
+                <Menu.Item as="a" active>Trang chủ</Menu.Item>
                 <Menu.Item position="right">
                   <Button as="a" href="/onboard" inverted={!fixed} onClick={logClickLogInButton}>
-                    Log in
+                    Đăng nhập
                   </Button>
                   <Button as="a" href="/onboard" inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }} onClick={logClickSignupButton}>
-                    Sign up
+                    Đăng ký
                   </Button>
                 </Menu.Item>
               </Container>
@@ -183,8 +184,8 @@ class MobileContainer extends React.Component<MobileContainerProps, MobileContai
         <Sidebar.Pushable>
           <Sidebar as={Menu} animation="push" inverted vertical visible={sidebarOpened}>
             <Menu.Item as="a" active>Home</Menu.Item>
-            <Menu.Item as="a" href="/onboard" onClick={logClickLogInButton}>Log in</Menu.Item>
-            <Menu.Item as="a" href="/onboard" onClick={logClickSignupButton}>Sign up</Menu.Item>
+            <Menu.Item as="a" href="/onboard" onClick={logClickLogInButton}>Đăng nhập</Menu.Item>
+            <Menu.Item as="a" href="/onboard" onClick={logClickSignupButton}>Đăng ký</Menu.Item>
           </Sidebar>
 
           <Sidebar.Pusher dimmed={sidebarOpened} onClick={this.handlePusherClick} style={{ minHeight: '100vh' }}>
@@ -194,13 +195,13 @@ class MobileContainer extends React.Component<MobileContainerProps, MobileContai
                   <Menu.Item onClick={this.handleToggle}>
                     <Icon name="sidebar" />
                   </Menu.Item>
-                  <Menu.Item as="a" active>Home</Menu.Item>
+                  <Menu.Item as="a" active>Trang chủ</Menu.Item>
                   <Menu.Item position="right">
                     <Button as="a" inverted size="small" href="/onboard" onClick={logClickLogInButton}>
-                      Log in
+                      Đăng nhập
                     </Button>
                     <Button as="a" inverted primary size="small" href="/onboard" style={{ marginLeft: '0.5em' }} onClick={logClickSignupButton}>
-                      Sign up
+                      Đăng ký
                     </Button>
                   </Menu.Item>
                 </Menu>
@@ -248,11 +249,11 @@ export default class Homepage extends React.Component<{}, {
       <Statistic.Group textAlign="center">
         <Statistic>
           <Statistic.Value>{this.state.committeeNo || <Loading small />}</Statistic.Value>
-          <Statistic.Label>Committees created</Statistic.Label>
+          <Statistic.Label>Hội đồng đã tạo</Statistic.Label>
         </Statistic>
         <Statistic>
           <Statistic.Value>{this.state.delegateNo || <Loading small />}</Statistic.Value>
-          <Statistic.Label>Delegates participating</Statistic.Label>
+          <Statistic.Label>Đại biểu tham gia</Statistic.Label>
         </Statistic>
       </Statistic.Group>
     );
@@ -266,24 +267,23 @@ export default class Homepage extends React.Component<{}, {
           <Grid stackable verticalAlign="middle">
             <Grid.Row>
               <Grid.Column width={8}>
-                <Header as="h3" style={{ fontSize: '2em' }}>Collaborative</Header>
+                <Header as="h3" style={{ fontSize: '2em' }}>Tính hợp tác cao</Header>
                 <p style={{ fontSize: '1.33em' }}>
-                  Using a shareable link delegates can: <br />
+                  Chỉ với một đường link, đại biểu có thể: <br />
                   <ShareCapabilities />
                 </p>
                 <p style={{ fontSize: '1.33em' }}>
-                  Everyone will see all updates in real-time, without needing to refresh the page. It's like Google Docs, but for MUN.
+                  Toàn bộ thay đổi sẽ hiển thị theo thời gian thực. Nó giống như Google Docs dành cho MUN vậy!
                 </p>
                 <p style={{ fontSize: '1.33em' }}>
-                 For virtual MUNs, we recommend pairing Muncoordinated with <a href="https://discord.com/">Discord</a>, which allows you to speak, pass notes, &amp; share files and links.
+                  Nhiều người có thể cùng quản lý một hội đồng lớn và sử dụng chung một tài khoản.
+                </p>
+                <Header as="h3" style={{ fontSize: '2em' }}>Lưu lên máy chủ đám mây và đồng bộ hóa</Header>
+                <p style={{ fontSize: '1.33em' }}>
+                  Toàn bộ dữ liệu của hội đồng sẽ được lưu lên máy chủ, giúp bạn dễ dàng tiếp tục hoạt động của một phiên họp mới mà không cần nhập lại dữ liệu.
                 </p>
                 <p style={{ fontSize: '1.33em' }}>
-                  If you've got a big committee, multiple directors can manage it at the same time, using the same account.
-                </p>
-                <Header as="h3" style={{ fontSize: '2em' }}>Backed up to the cloud</Header>
-                <p style={{ fontSize: '1.33em' }}>
-                  You won't have to worry about data loss ever again. All committee activity is automatically saved to the server, 
-                  so you can start sessions with all data available from the day before.
+                  Ngoài ra, toàn bộ dữ liệu của bản tiếng Việt sẽ được lưu chung và đồng bộ hóa với máy chủ với phần mềm Muncoordinated gốc, nên bạn không cần phải nhập lại dữ liệu nếu muốn chuyển đổi về phiên bản gốc <i>(trừ phần quốc gia thành viên hội đồng, chúng mình sẽ cố gắng đồng bộ hóa. Phiên bản hoàn thiện sẽ ra mắt sớm thôi!)</i>.
                 </p>
               </Grid.Column>
               <Grid.Column floated="right" width={8}>
@@ -297,26 +297,28 @@ export default class Homepage extends React.Component<{}, {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column width={8}>
-                <Header as="h3" style={{ fontSize: '2em' }}>A comprehensive feature set</Header>
+                <Header as="h3" style={{ fontSize: '2em' }}>Tính năng đa dạng</Header>
                 <div style={{ fontSize: '1.33em' }}>
-                  Muncoordinated supports: <br />
+                  Phần mềm hỗ trợ: <br />
                   <List as="ul">
-                    <List.Item as="li">Moderated and unmoderated caucuses</List.Item>
-                    <List.Item as="li">Resolutions and amendments</List.Item>
-                    <List.Item as="li">Motions</List.Item>
-                    <List.Item as="li">Roll-call voting</List.Item>
-                    <List.Item as="li">Custom delegations</List.Item>
-                    <List.Item as="li">Strawpolls</List.Item>
-                    <List.Item as="li">File uploads</List.Item>
-                    <List.Item as="li">Delegate performance statistics</List.Item>
+                    <List.Item as="li">Phiên thảo luận mở và thảo luận kín</List.Item>
+                    <List.Item as="li">Nghị quyết và các đề xuất chỉnh sửa</List.Item>
+                    <List.Item as="li">Các kiến nghị</List.Item>
+                    <List.Item as="li">Biểu quyết</List.Item>
+                    <List.Item as="li">Thêm các đoàn đại biểu hoặc quốc gia khác</List.Item>
+                    <List.Item as="li">Tải lên file</List.Item>
+                    <List.Item as="li">Số liệu về hoạt động của các đại biểu trong hội đồng</List.Item>
                   </List>
                 </div>
-                <Header as="h3" style={{ fontSize: '2em' }}>Free and open-source</Header>
+                <Header as="h3" style={{ fontSize: '2em' }}>Miễn phí, mã nguồn mở và được thiết kế riêng</Header>
                 <p style={{ fontSize: '1.33em' }}>
-                  All of Muncoordinated's features are available for free, not locked behind paywalls.
+                  Toàn bộ tính năng của vi-Muncoordinated đều hoàn toàn miễn phí
                 </p>
                 <p style={{ fontSize: '1.33em' }}>
-                  It's also <a href="https://github.com/MaxwellBo/Muncoordinated-2">open-source</a>, so you're free to customize it to your needs and liking.
+                  Phần mềm này là phần mềm <a href="https://github.com/MaxwellBo/Muncoordinated-2">mã nguồn mở</a>, nên bạn hoàn toàn có thể điều chỉnh theo ý muốn
+                </p>
+                <p style={{ fontSize: '1.33em' }}>
+                  Ngoài ra, phần mềm đã được thiết kế lại, bổ sung và bỏ bớt một số tính năng không cần thiết, phục vụ nhu cầu sử dụng của cộng đồng MUN Việt Nam, đặc biệt dành cho các hội đồng sử dụng tiếng Việt.
                 </p>
               </Grid.Column>
               <Grid.Column floated="right" width={8}>
@@ -337,31 +339,35 @@ export default class Homepage extends React.Component<{}, {
             <Grid divided inverted stackable>
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <Header inverted as="h4" content="About" />
+                  <Header inverted as="h4" content="Về phần mềm" />
                   <List link inverted>
-                    <List.Item as="a" href={REPO_LINK}>Source</List.Item>
+                    <List.Item as="a" href={REPO_LINK_ORIGINAL}>Muncoordinated</List.Item>
+                    <List.Item as="a" href={REPO_LINK_NEW}>vi-Muncoordinated</List.Item>
                     <List.Item
                       as="a"
-                      href="https://github.com/MaxwellBo/Muncoordinated-2/blob/master/LICENSE"
+                      href="https://github.com/penny2k8/vi-Muncoordinated-2/blob/master/LICENSE"
                     >
-                      License
+                      Giấy phép
                     </List.Item>
                   </List>
                 </Grid.Column>
-                <Grid.Column width={3}>
-                  <Header inverted as="h4" content="Services" />
+                {/*<Grid.Column width={3}>
+                  <Header inverted as="h4" content= "Services"/>
                   <List link inverted>
                     <List.Item as="a" href="https://github.com/MaxwellBo/Muncoordinated-2/discussions">Forum</List.Item>
                     <List.Item as="a" href="https://github.com/MaxwellBo/Muncoordinated-2/issues">Support</List.Item>
                     <List.Item as="a" href="https://www.helpmymun.com/">MUN Resources</List.Item>
                   </List>
-                </Grid.Column>
+                </Grid.Column>*/}
                 <Grid.Column width={7}>
-                  <Header as="h4" inverted>Info</Header>
-                  <p>Made with <span role="img" aria-label="love">💖</span> by <a href="https://github.com/MaxwellBo">Max Bo</a>, 
-                  with assistance from the <a href="https://www.facebook.com/UQUNSA/">UQ United Nations Student Association</a>
+                  <Header as="h4" inverted>Thông tin</Header>
+                  <p><b>Muncoordinated</b> được phát triển bởi <a href="https://github.com/MaxwellBo">Max Bo</a>, 
+                  với sự hỗ trợ của <a href="https://www.facebook.com/UQUNSA/">UQ United Nations Student Association</a>
                   </p>
-                  <p>Copyright © 2026</p>
+                  <p><b>vi-Muncoordinated</b> được phát triển bởi <a href="https://github.com/penny2k8">Minh Le</a>,  
+                  với sự hỗ trợ của <a href="https://web.facebook.com/haiphongmun">Hai Phong Model United Nations</a>
+                  </p>
+                  <p>© 2026</p>
                 </Grid.Column>
               </Grid.Row>
             </Grid>

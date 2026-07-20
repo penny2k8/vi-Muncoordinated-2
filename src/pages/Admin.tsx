@@ -4,9 +4,11 @@ import {
   MemberData,
   MemberID,
   Rank,
+  canonicalCountryName,
   nameToFlagCode,
   nameToMemberOption,
-  MemberOption
+  MemberOption,
+  searchCountryOptions
 } from '../modules/member';
 import { Dropdown, Flag, Table, Button, Checkbox,
   CheckboxProps, DropdownProps, ButtonProps, Container, Message, Icon, Grid } from 'semantic-ui-react';
@@ -110,10 +112,10 @@ export default class Admin extends React.Component<Props, State> {
   canPushMember = (member: MemberOption) => { 
     const members = this.props.committee.members || {};
     const memberNames = Object.keys(members).map(id => 
-      members[id].name
+      canonicalCountryName(members[id].name)
     );
 
-    return !_.includes(memberNames, member.text);
+    return !_.includes(memberNames, canonicalCountryName(member.text));
   }
 
   pushSelectedMember = (event: React.MouseEvent<HTMLButtonElement>, data: ButtonProps) => {
@@ -183,8 +185,8 @@ export default class Admin extends React.Component<Props, State> {
           <Dropdown
             icon="search"
             className="adder__dropdown--select-member"
-            placeholder=""
-            search
+            placeholder="Select preset member"
+            search={searchCountryOptions}
             selection
             fluid
             allowAdditions

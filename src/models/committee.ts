@@ -1,4 +1,12 @@
-import {MemberData, MemberID, MemberOption, membersToOptions, membersToPresentOptions, Rank} from '../modules/member';
+import {
+  canonicalCountryName,
+  MemberData,
+  MemberID,
+  MemberOption,
+  membersToOptions,
+  membersToPresentOptions,
+  Rank
+} from '../modules/member';
 import {logCreateMember} from '../modules/analytics';
 import _ from 'lodash';
 import {CaucusData, CaucusID, DEFAULT_CAUCUS} from "./caucus";
@@ -220,11 +228,12 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Burkina Faso'},
     {name: 'Burundi'},
     {name: 'Cameroon'},
-    {name: 'Cape Verde'},
+    {name: 'Cabo Verde'},
     {name: 'Cộng hòa Trung Phi'},
     {name: 'Chad'},
     {name: 'Comoros'},
-    {name: 'Congo'},
+    {name: 'Cộng hòa Congo'},
+    {name: 'CHDC Congo'},
     {name: 'Bờ Biển Ngà'},
     {name: 'Djibouti'},
     {name: 'Equatorial Guinea'},
@@ -249,11 +258,11 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Niger'},
     {name: 'Nigeria'},
     {name: 'Rwanda'},
-    {name: 'Sao Tome'},
+    {name: 'Sao Tome and Principe'},
     {name: 'Senegal'},
     {name: 'Sierra Leone'},
     {name: 'Sudan'},
-    {name: 'Tanzania'},
+    {name: 'United Republic of Tanzania'},
     {name: 'Togo'},
     {name: 'Tunisia'},
     {name: 'Uganda'},
@@ -261,7 +270,7 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Zimbabwe'}
   ],
   'Hiệp hội các quốc gia Đông Nam Á': [
-    {name: 'Brunei'},
+    {name: 'Brunei Darussalam'},
     {name: 'Campuchia'},
     {name: 'Indonesia'},
     {name: 'Lào'},
@@ -270,14 +279,22 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Philippines'},
     {name: 'Singapore'},
     {name: 'Thái Lan'},
+    {name: 'Timor-Leste'},
     {name: 'Việt Nam'}
   ],
   'BRICS': [
     {name: 'Brazil'},
-    {name: 'Trung Quốc'},
-    {name: 'Ấn Độ'},
-    {name: 'Nga'},
-    {name: 'Nam Phi'}
+    {name: 'China'},
+    {name: 'Egypt'},
+    {name: 'Ethiopia'},
+    {name: 'India'},
+    {name: 'Indonesia'},
+    {name: 'Iran (Islamic Republic of)'},
+    {name: 'Russian Federation'},
+    {name: 'Saudi Arabia'},
+    {name: 'South Africa'},
+    {name: 'Các tiểu Vương quốc Arab Thống nhất'}
+
   ],
   'Liên Minh châu Âu': [
     {name: 'Áo'},
@@ -294,7 +311,7 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Hy Lạp'},
     {name: 'Hungary'},
     {name: 'Ireland'},
-    {name: 'Y'},
+    {name: 'Ý'},
     {name: 'Latvia'},
     {name: 'Lithuania'},
     {name: 'Luxembourg'},
@@ -360,28 +377,30 @@ export const TEMPLATE_TO_MEMBERS: Record<Template, {
     {name: 'Romania'},
     {name: 'Slovakia'},
     {name: 'Slovenia'},
-    {name: 'Tây Ban Nha'},
-    {name: 'Thụy Điển'}, // since 2024
+    {name: 'Spain'},
+    {name: 'Sweden'}, // since 2024
     {name: 'Thổ Nhĩ Kỳ'},
-    {name: 'Các Tiểu vương quốc Arab thống nhất'},
     {name: 'Hoa Kỳ'},
   ],
   'Hội đồng Bảo an Liên Hợp Quốc': [
-    {name: 'Algeria'},
-    {name: 'Đan Mạch'},
-    {name: 'Hàn Quốc'},
-    {name: 'Hy Lạp'},
-    {name: 'Guyana'},
+    {name: 'Bahrain'},
+    {name: 'China', rank: Rank.Veto},
+    {name: 'Colombia'},
+    {name: 'Democratic Republic of the Congo'},
+    {name: 'Denmark'},
+    {name: 'France', rank: Rank.Veto},
+    {name: 'Greece'},
+    {name: 'Latvia'},
+    {name: 'Liberia'},
     {name: 'Pakistan'},
     {name: 'Panama'},
-    {name: 'Pháp', rank: Rank.Veto},
-    {name: 'Nga', rank: Rank.Veto},
-    {name: 'Sierra Leone'},
-    {name: 'Slovenia'},
+    {name: 'Russian Federation', rank: Rank.Veto},
     {name: 'Somalia'},
-    {name: 'Trung Quốc', rank: Rank.Veto},
-    {name: 'Vương quốc Anh', rank: Rank.Veto},
-    {name: 'Hoa Kỳ', rank: Rank.Veto},
+    {name: 'United Kingdom', rank: Rank.Veto},
+    {name: 'United States of America', rank: Rank.Veto},
+    {name: 'Tây Ban Nha'},
+    {name: 'Thụy Điển'}, // since 2024
+    {name: 'Thổ Nhĩ Kỳ'},
   ],
 }
 export const pushTemplateMembers = (committeeID: CommitteeID, template: Template) => {
@@ -392,12 +411,12 @@ export const pushTemplateMembers = (committeeID: CommitteeID, template: Template
   ref.child('members').once('value', (snapshot) => {
     const members: Record<MemberID, MemberData> = snapshot.val() || {};
     const memberNames = Object.keys(members).map(id =>
-      members[id].name
+      canonicalCountryName(members[id].name)
     );
 
     [...TEMPLATE_TO_MEMBERS[template]]
       // Don't try and readd members that already exist
-      .filter(member => !_.includes(memberNames, member.name))
+      .filter(member => !_.includes(memberNames, canonicalCountryName(member.name)))
       .forEach(
         member =>
           pushMember(committeeID, {

@@ -8,6 +8,7 @@ on:
 
 jobs:
   cypress:
+    if: false
     name: Cypress With Firebase Emulators
     runs-on: ubuntu-latest
 

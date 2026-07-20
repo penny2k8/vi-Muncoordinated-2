@@ -1,7 +1,7 @@
 # Preamble
-vi-Muncoordinated is a Vietnamese UI adaptation of Muncoordinated. It has been removed from the fork network due to complications during the previous syncing process.
-New commits to Muncoordinated will be synced through another fork before being merged into the vi-Muncoordinated.
-The details below are preserved from the original Muncoordinated repository (certain parts are ommitted to prevent confusion).
+vi-Muncoordinated is a Vietnamese UI adaptation of Muncoordinated. It has been removed from the fork network due to complications during the previous syncing process. <br>
+New commits to Muncoordinated will be synced through another fork before being merged into the vi-Muncoordinated. <br>
+The details below are preserved from the original Muncoordinated repository (certain parts are ommitted to prevent confusion). <br>
 
 # Muncoordinated
 

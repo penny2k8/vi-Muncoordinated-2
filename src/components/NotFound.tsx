@@ -21,9 +21,9 @@ export class NotFound extends React.PureComponent<Props, State> {
       <Message error icon>
         <Icon name="question" />
         <Message.Content>
-          <Message.Header as="h1">Not found</Message.Header>
-          The {item} you were looking for (ID: {id}) could not be found.
-          It may have been deleted, or the URL you navigated to was incorrect.
+          <Message.Header as="h1">Không tìm thấy</Message.Header>
+          Không thể tìm thấy {item} bạn đang tìm (ID: {id}).
+          Nó có thể đã bị xóa, hoặc đường link bạn vừa truy cập chưa chính xác.
         </Message.Content>
       </Message>
     );

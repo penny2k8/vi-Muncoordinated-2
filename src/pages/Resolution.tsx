@@ -810,7 +810,7 @@ export default class Resolution extends React.Component<Props, State> {
     if (!loading && !resolution) {
       return (
         <Container text style={{ 'padding-bottom': '2em' }}>
-          <NotFound item="resolution" id={resolutionID} />
+          <NotFound item="nghị quyết" id={resolutionID} />
         </Container>
       );
     } else {

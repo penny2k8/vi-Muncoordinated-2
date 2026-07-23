@@ -18,20 +18,20 @@ interface Notification {
 }
 
 const PERMISSION_DENIED_NOTIFICATION: Notification =  {
-  header: 'Permission denied',
-  message: 'Please login as the owner of this committee in order to perform that action',
+  header: 'Không thể thực hiện',
+  message: 'Vui lòng đăng nhập tài khoản của chủ hội đồng để thực hiện tác vụ này',
   disposition: 'negative'
 };
 
 const CONNECTION_LOST_NOTIFICATION: Notification =  {
-  header: 'Connection lost',
-  message: 'The connection to the server was lost. You may have been logged out',
+  header: 'Mất kết nối',
+  message: 'Kết nối với máy chủ có thể đã bị ngắt. Bạn có thể đã bị đăng xuất',
   disposition: 'negative'
 };
 
 const CONNECTION_REGAINED_NOTIFICATION: Notification =  {
-  header: 'Connection regained',
-  message: 'The connection to the server was regained',
+  header: 'Kết nối thành công',
+  message: 'Kết nối với máy chủ đã được khôi phục thành công',
   disposition: 'positive'
 };
 

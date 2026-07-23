@@ -767,7 +767,7 @@ export default class Caucus extends React.Component<Props, State> {
     if (!loading && !caucus) {
       return (
         <Container text style={{ 'padding-bottom': '2em' }}>
-          <NotFound item="caucus" id={caucusID} />
+          <NotFound item="phiên thảo luận" id={caucusID} />
         </Container>
       );
     } else {

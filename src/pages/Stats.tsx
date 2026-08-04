@@ -2,7 +2,7 @@ import * as React from 'react';
 import firebase from 'firebase/compat/app';
 import * as _ from 'lodash';
 import { RouteComponentProps } from 'react-router';
-import { Table, Flag, Container } from 'semantic-ui-react';
+import { Table, Flag, Container, Message, Button, Grid } from 'semantic-ui-react';
 import { MemberData, MemberID, nameToFlagCode } from '../modules/member';
 import { URLParameters } from '../types';
 import Loading from '../components/Loading';
@@ -27,6 +27,7 @@ interface MemberStats {
 interface State {
   committee?: CommitteeData;
   committeeFref: firebase.database.Reference;
+  showStats: boolean; // new: controls whether to hide the Message and show the stats
 }
 
 export default class Stats extends React.Component<Props, State> {
@@ -39,7 +40,8 @@ export default class Stats extends React.Component<Props, State> {
       committeeFref: firebase
         .database()
         .ref('committees')
-        .child(match.params.committeeID)
+        .child(match.params.committeeID),
+      showStats: false,
     };
   }
 
@@ -71,12 +73,11 @@ export default class Stats extends React.Component<Props, State> {
       const history = caucus.history || {} as Record<string, SpeakerEvent>;
       
       Object.keys(history).map(hid => history[hid]).forEach((speakerEvent: SpeakerEvent) => {
-        if (speakerEvent.who === member.name) { // I fucked up and used name in SpeakerEvent, not MemberID
+        if (speakerEvent.who === member.name) { // kept original logic (name used in SpeakerEvent)
           times += 1;
           duration += speakerEvent.duration;
         }
-      }
-      );
+      });
     });
 
     const motions = committee.motions || {} as Record<MotionID, MotionData>;
@@ -85,7 +86,7 @@ export default class Stats extends React.Component<Props, State> {
       const motion: MotionData = motions[mid];
 
       if (motion.proposer === member.name) {
-        motionProposals += 1
+        motionProposals += 1;
       }
     });
 
@@ -97,11 +98,10 @@ export default class Stats extends React.Component<Props, State> {
       const amendments = resolution.amendments || {} as Record<AmendmentID, AmendmentData>;
       
       Object.keys(amendments).map(aid => amendments[aid]).forEach((amendment: AmendmentData) => {
-        if (amendment.proposer === member.name) { // I fucked up and used name in SpeakerEvent, not MemberID
+        if (amendment.proposer === member.name) {
           amendmentProposals += 1;
         }
-      }
-      );
+      });
     });
 
     return { times, duration, motionProposals, amendmentProposals };
@@ -165,13 +165,55 @@ export default class Stats extends React.Component<Props, State> {
     );
   }
 
-  render() {
+  // helper that returns either the table or Loading (kept and reused)
+  accessGranted(){
     const { committee } = this.state;
-
     if (committee) {
       return this.renderCommittee(committee);
     } else {
       return <Loading />;
     }
   }
-}  
+
+  render() {
+    const { showStats } = this.state;
+
+    // If the user clicked the button, show the committee (or Loading while data arrives).
+    if (showStats) {
+      return this.accessGranted();
+    }
+
+    // Default: show the warning message with a button that reveals the table.
+    return (
+    <Container style={{  display: 'flex', justifyContent: 'center', height: 'auto',  padding: '1em'}}>\
+          <Helmet>
+          <title>{`Thống kê - vi-Muncoordinated`}</title>
+        </Helmet>
+     <Grid>
+      <Grid.Row columns="equal"
+          stackable>
+        <Grid.Column>
+           <Message role="region" aria-live="polite" style={{ width: '100%', maxWidth: 800, textAlign: 'center' }}>
+        <Message.Header>Cẩn thận!</Message.Header>
+          <p>
+            Mục thống kê này không nên được hiển thị trên màn hình lớn của hội đồng hoặc cho các đại biểu xem được
+          </p>
+                    <p>
+            Hãy tắt máy chiếu hoặc mở trang này ở tab khác trước khi ấn vào nút "Mở bảng thống kê"
+          </p>
+
+          <Button
+            primary
+            onClick={() => this.setState({ showStats: true })}
+            style={{ marginTop: 8 }}
+          >
+            Mở bảng thống kê
+          </Button>
+      </Message>
+        </Grid.Column>
+      </Grid.Row>
+     </Grid>
+    </Container>  
+    );
+  }
+}

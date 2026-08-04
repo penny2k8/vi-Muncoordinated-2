@@ -103,8 +103,8 @@ export class Login extends React.Component<Props, State> {
     firebase.auth().createUserWithEmailAndPassword(email, password).then(credential => {
 
       const success = { 
-        name: 'Account created',
-        message: 'Your account was successfully created' 
+        name: 'Tạo tài khoản',
+        message: 'tài khoản đã được tạo thành công' 
       };
 
       this.setState({ 

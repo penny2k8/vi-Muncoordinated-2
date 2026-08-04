@@ -93,3 +93,8 @@ input[type="text"]{
 {
   font-family: 'Be Vietnam Pro', sans-serif !important;
 }
+i.flag.mm:before,
+i.flag.myanmar:before,
+i.flag.burma:before {
+  background-position: -36px -1717px !important;
+}

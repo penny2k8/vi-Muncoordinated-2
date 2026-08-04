@@ -132,7 +132,7 @@ export default class Notifications extends React.Component<Props, State> {
             negative={notification.disposition === 'negative'} 
             onClick={this.dismiss(key)}
           >
-              Dismiss
+              Đóng
           </Button>
         </Card.Content>
       </Card>

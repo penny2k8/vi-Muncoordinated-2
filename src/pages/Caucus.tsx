@@ -497,7 +497,7 @@ function Queuer(props: {
 
   return (
     <Segment textAlign="center">
-      <Label attached="top left" size="large">Thêm người nói</Label>
+      <Label attached="top left" size="large">Thêm người phát biểu</Label>
       <Form>
         <Form.Dropdown
           icon="search"

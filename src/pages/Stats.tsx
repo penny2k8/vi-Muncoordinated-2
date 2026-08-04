@@ -185,7 +185,7 @@ export default class Stats extends React.Component<Props, State> {
 
     // Default: show the warning message with a button that reveals the table.
     return (
-    <Container style={{  display: 'flex', justifyContent: 'center', height: 'auto',  padding: '1em'}}>\
+    <Container style={{  display: 'flex', justifyContent: 'center', height: 'auto',  padding: '1em'}}>
           <Helmet>
           <title>{`Thống kê - vi-Muncoordinated`}</title>
         </Helmet>

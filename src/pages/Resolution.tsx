@@ -21,6 +21,10 @@ import {
   SemanticICONS,
   Statistic,
   Tab,
+  TableRow,
+  TableCell,
+  TableBody,
+  Table,
   TabProps,
   TextArea
 } from 'semantic-ui-react';
@@ -384,7 +388,7 @@ export default class Resolution extends React.Component<Props, State> {
       <List.Item key={key}>
         {button}
         <List.Content verticalAlign="middle">
-          <List.Header>
+          <List.Header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left'}}>
             {member.name.toUpperCase()}
             {member.voting && voting}
             {/* {!member.present && <Label circular color="red" size="mini">NP</Label>} */}
@@ -403,14 +407,22 @@ export default class Resolution extends React.Component<Props, State> {
   renderCount = (key: string, color: SemanticCOLORS, icon: SemanticICONS, count: number) => {
    return (
       <Grid.Column key={key}>
-        <Button
+        {/*<Button
           key={'count' + key}
           color={color}
           icon
           fluid
         >
           {key.toUpperCase()}: {count}
-        </Button>
+        </Button> */}
+      <Table color={color} inverted>
+          <Table.Body style={{fontWeight: 'bold'}}>
+            <TableRow>
+            <TableCell width={14}><Icon name={icon}/>{key.toUpperCase()}</TableCell>
+            <TableCell style={{textAlign: 'center'}}>{count}</TableCell>
+          </TableRow>
+          </Table.Body>
+        </Table>
       </Grid.Column>
     );
   }

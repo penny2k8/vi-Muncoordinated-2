@@ -87,13 +87,13 @@ export function CommitteeStatsTable(props: { data?: CommitteeData, verbose?: boo
         {verbose && <Table.Row>
           <Table.Cell>Nghị quyết</Table.Cell>
           <Table.Cell>{draftResolution.toString()}</Table.Cell>
-          <Table.Cell>Số lượng đại biểu cần thiết để bỏ nghị quyết</Table.Cell>
+          <Table.Cell>Số lượng đại biểu cần thiết để tạm dừng thảo luận nghị quyết</Table.Cell>
           <Table.Cell>25% số đại biểu có quyền biểu quyết</Table.Cell>
         </Table.Row>}
         {verbose && <Table.Row>
           <Table.Cell>Chỉnh sửa</Table.Cell>
           <Table.Cell>{amendment.toString()}</Table.Cell>
-          <Table.Cell>Số lượng đại biểu cần thiết để bỏ đề xuất chỉnh sửa</Table.Cell>
+          <Table.Cell>Số lượng đại biểu cần thiết để tạm dừng thảo luận đề xuất chỉnh sửa</Table.Cell>
           <Table.Cell>10% số đại biểu có quyền biểu quyết</Table.Cell>
         </Table.Row>}
       </Table.Body>

@@ -101,7 +101,7 @@ export enum AmendmentStatus {
 
 export const AMENDMENT_STATUS_OPTIONS: DropdownItemProps[] = [
   {key: AmendmentStatus.Proposed, value: AmendmentStatus.Proposed, text: "Đề xuất"},
-  {key: AmendmentStatus.Incorporated, value: AmendmentStatus.Incorporated, text: "Đã bổ sung"},
+  {key: AmendmentStatus.Incorporated, value: AmendmentStatus.Incorporated, text: "Đã điều chỉnh"},
   {key: AmendmentStatus.Rejected, value: AmendmentStatus.Rejected, text: "Từ chối"},
 ]
 

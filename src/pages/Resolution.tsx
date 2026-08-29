@@ -116,7 +116,7 @@ export default class Resolution extends React.Component<Props, State> {
     this.state = {
       committeeFref: firebase.database().ref('committees').child(match.params.committeeID),
       showResult: false,
-      showCount: false,
+      showCount: true,
       loading: true
     };
   }
@@ -404,7 +404,7 @@ export default class Resolution extends React.Component<Props, State> {
     return <CommitteeStatsTable verbose={false} data={committee} />;
   }
 
-  renderCount = (key: string, color: SemanticCOLORS, icon: SemanticICONS, count: number) => {
+  renderCount = (key: string, color: SemanticCOLORS, icon: SemanticICONS, textColor: string ,count: number) => {
    return (
       <Grid.Column key={key}>
         {/*<Button
@@ -418,8 +418,8 @@ export default class Resolution extends React.Component<Props, State> {
       <Table color={color} inverted>
           <Table.Body style={{fontWeight: 'bold'}}>
             <TableRow>
-            <TableCell width={14}><Icon name={icon}/>{key.toUpperCase()}</TableCell>
-            <TableCell style={{textAlign: 'center'}}>{count}</TableCell>
+            <TableCell width={14} style={{color: textColor}}><Icon name={icon}/>{key.toUpperCase()}</TableCell>
+            <TableCell style={{textAlign: 'center', color: textColor}}> {count}</TableCell>
           </TableRow>
           </Table.Body>
         </Table>
@@ -509,9 +509,9 @@ export default class Resolution extends React.Component<Props, State> {
             {columns}
           </Grid>
           <Grid columns="equal">
-            {this.state.showCount && renderCount('tán thành', 'green', 'plus', fors)}
-            {this.state.showCount && renderCount('không tán thành', 'red', 'remove', againsts)}
-            {this.state.showCount && renderCount('bỏ phiếu trắng', 'yellow', 'minus', abstains)}
+            {this.state.showCount && renderCount('tán thành', 'green', 'plus','#FFFFFF', fors)}
+            {this.state.showCount && renderCount('không tán thành', 'red', 'remove','#FFFFFF', againsts)}
+            {this.state.showCount && renderCount('bỏ phiếu trắng', 'yellow', 'minus','#FFFFFF', abstains)}
           </Grid>
           {this.state.showResult && resolutionPassed && <Statistic inverted>
             <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Thông qua</Statistic.Value>

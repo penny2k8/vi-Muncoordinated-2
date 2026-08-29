@@ -12,6 +12,17 @@ enum Mode {
   ForgotPassword = 'ForgotPassword'
 }
 
+const viErrorMessages: Record<string, string> = {
+  'auth/user-not-found': 'Tài khoản này này không được tìm thấy. Nó có thể đã bị xóa. (auth/user-not-found)',
+  'auth/wrong-password': 'Mật khẩu này không chính xác hoặc tài khoản không có mật khẩu. (auth/wrong-password)',
+  'auth/email-already-in-use': 'Địa chỉ email này đã được sử dụng bởi tài khoản khác. (auth/email-already-in-use)',
+  'auth/invalid-email': 'Email này không hợp lệ. (auth/invalid-email).',
+};
+
+function getViErrorMessage(errorCode: string): string {
+  return viErrorMessages[errorCode] || 'Lỗi không xác định';
+}
+
 interface State {
   user?: firebase.User | null;
   email: string;
@@ -79,61 +90,66 @@ export class Login extends React.Component<Props, State> {
     });
   }
 
-  login = () => {
-    const { email, password } = this.state;
+ login = () => {
+  const { email, password } = this.state;
 
-    this.setState({ loggingIn: true });
+  this.setState({ loggingIn: true });
 
-    firebase.auth().signInWithEmailAndPassword(email, password).then(credential => {
-      this.setState({ 
-        loggingIn: false,
-        email: '',
-        password: ''
-      });
-      logLogin(credential.user?.uid)
-    }).catch(err => {
-      this.setState({ loggingIn: false, error: err });
+  firebase.auth().signInWithEmailAndPassword(email, password).then(credential => {
+    this.setState({ 
+      loggingIn: false,
+      email: '',
+      password: ''
     });
-  }
+    logLogin(credential.user?.uid)
+  }).catch(err => {
+  const translatedError = new Error(getViErrorMessage(err.code));
+  translatedError.name = 'Lỗi';  // ← Vietnamese for "Error"
+  this.setState({ loggingIn: false, error: translatedError });
+});
+}
 
-  createAccount = () => {
-    const { email, password } = this.state;
-    this.setState({ creating: true });
+createAccount = () => {
+  const { email, password } = this.state;
+  this.setState({ creating: true });
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(credential => {
+  firebase.auth().createUserWithEmailAndPassword(email, password).then(credential => {
+    const success = { 
+      name: 'Tạo tài khoản',
+      message: 'tài khoản đã được tạo thành công' 
+    };
 
-      const success = { 
-        name: 'Tạo tài khoản',
-        message: 'tài khoản đã được tạo thành công' 
-      };
-
-      this.setState({ 
-        creating: false,
-        email: '',
-        password: '',
-        success 
-      });
-      logCreateAccount(credential.user?.uid)
-    }).catch(err => {
-      this.setState({ creating: false, error: err });
+    this.setState({ 
+      creating: false,
+      email: '',
+      password: '',
+      success 
     });
-  }
+    logCreateAccount(credential.user?.uid)
+  }).catch(err => {
+  const translatedError = new Error(getViErrorMessage(err.code));
+  translatedError.name = 'Lỗi';  // ← Vietnamese for "Error"
+  this.setState({ loggingIn: false, error: translatedError });
+  });
+}
 
-  resetPassword = () => {
-    const { email } = this.state;
-    this.setState({ resetting: true });
+resetPassword = () => {
+  const { email } = this.state;
+  this.setState({ resetting: true });
 
-    firebase.auth().sendPasswordResetEmail(email).then(() => {
-      const success = {
-        name: 'Đặt lại mật khẩu',
-        message: `Vui lòng kiểm tra hộp thư chính của email ${email}`
-      };
+  firebase.auth().sendPasswordResetEmail(email).then(() => {
+    const success = {
+      name: 'Đặt lại mật khẩu',
+      message: `Vui lòng kiểm tra hộp thư chính của email ${email}`
+    };
 
-      this.setState({ resetting: false, success });
-    }).catch(err => {
-      this.setState({ resetting: false, error: err });
-    });
-  }
+    this.setState({ resetting: false, success });
+  }).catch(err => {
+  const translatedError = new Error(getViErrorMessage(err.code));
+  translatedError.name = 'Lỗi';  // ← Vietnamese for "Error"
+  this.setState({ loggingIn: false, error: translatedError });
+  });
+}
 
   dismissError = () => {
     this.setState({ error: undefined });

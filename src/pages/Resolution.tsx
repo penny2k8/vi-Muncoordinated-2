@@ -465,9 +465,6 @@ export default class Resolution extends React.Component<Props, State> {
 
     const resolutionVetoed = !!vetoes[0];
 
-  if (resolutionVetoed && !this.state.showResult) {
-    this.setState({ showResult: true });
-  }
     const votesByVoters = Object.keys(votes || {})
       .filter(k => sortedPresentAndCanVote.includes(k))
       .map(k => votes[k]);
@@ -484,10 +481,9 @@ export default class Resolution extends React.Component<Props, State> {
     const threshold = getThreshold(requiredMajority, committee, fors, againsts);
     const thresholdName = getThresholdName(requiredMajority);
 
-    const votingNotDone: boolean = remaining != 0 && !resolutionVetoed;
-    const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed && !votingNotDone; 
-    const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed && !votingNotDone;
-
+    const votingDone: boolean = remaining == 0 || resolutionVetoed;
+    const resolutionPassed: boolean = fors >= threshold && !resolutionVetoed; 
+    const resolutionFailed: boolean = fors + remaining < threshold && !resolutionVetoed;
     const COLUMNS = 3;
     const ROWS = Math.ceil(sortedPresentAndCanVote.length / COLUMNS);
 
@@ -513,33 +509,41 @@ export default class Resolution extends React.Component<Props, State> {
             {this.state.showCount && renderCount('không tán thành', 'red', 'remove','#FFFFFF', againsts)}
             {this.state.showCount && renderCount('bỏ phiếu trắng', 'yellow', 'minus','#FFFFFF', abstains)}
           </Grid>
-          {this.state.showResult && resolutionPassed && <Statistic inverted>
+          {votingDone && !resolutionVetoed && <Grid columns="equal">
+                <Grid.Column textAlign='right'><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button> </Grid.Column>
+                <Grid.Column textAlign='left'>
+                  <Button color={this.state.showResult ? undefined : 'blue'} onClick={() => this.setState({ showResult: !this.state.showResult })}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button>
+                  </Grid.Column>
+            </Grid>}
+          {!votingDone && <Grid columns="equal">
+                <Grid.Column><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button> </Grid.Column>
+            </Grid>}
+          {resolutionVetoed && <Grid columns="equal">
+                <Grid.Column textAlign='right'><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button> </Grid.Column>
+                <Grid.Column textAlign='left'>
+                  <Button disabled>Ẩn kết quả</Button>
+                  </Grid.Column>
+            </Grid>}
+          {votingDone && this.state.showResult && resolutionPassed && <Statistic inverted>
             <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Thông qua</Statistic.Value>
             <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
             {requiredMajority === Majority.TwoThirdsNoAbstentions &&
               <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
             }
           </Statistic>}
-          {this.state.showResult && resolutionFailed && <Statistic inverted>
+          {votingDone && this.state.showResult && resolutionFailed && <Statistic inverted>
             <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Không thông qua</Statistic.Value>
             <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
           </Statistic>}
           {resolutionVetoed && <Statistic inverted>
             <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Phủ quyết</Statistic.Value>
             <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
-          </Statistic>}
-          {this.state.showResult && votingNotDone && <Statistic inverted>
-            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Chưa hoàn thành</Statistic.Value>
-            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "normal"}}>Còn <strong style={{ fontWeight: "bold" }}>{remaining}</strong> đại biểu chưa biểu quyết, hãy hoàn thành quy trình biểu quyết</Statistic.Label>
-          </Statistic>}
+          </Statistic>}         
           <Segment inverted>
             {this.renderMajoritySelector(resolution)}
           </Segment>
-          <Grid columns="equal">
-            <Grid.Column textAlign="right"><Button color={this.state.showCount ? undefined : 'blue'} onClick={() => this.setState({ showCount: !this.state.showCount })}>{this.state.showCount ? 'Ẩn số phiếu' : 'Hiện số phiếu'}</Button></Grid.Column>
-            <Grid.Column textAlign="left"><Button color={this.state.showResult ? undefined : 'blue'} onClick={() => this.setState({ showResult: !this.state.showResult })}>{this.state.showResult ? 'Ẩn kết quả' : 'Hiện kết quả'}</Button></Grid.Column>            
-           </Grid>
         </Segment>
+        <p style={{textAlign: "center"}}><i>Nút "Hiện kết quả" sẽ xuất hiện sau khi hoàn thành biểu quyết nhé!</i></p>
         {this.renderStats()}
       </>
     );

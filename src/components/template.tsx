@@ -51,7 +51,6 @@ export function TemplateAdder(props: { committeeID: CommitteeID }) {
         active={activeIndex === 0}
         index={0}
         onClick={openAccordion}
-        style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "normal"}}
       >
         <Icon name='dropdown'/>
         Thêm thành viên từ mẫu

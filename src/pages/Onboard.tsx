@@ -212,13 +212,6 @@ export default class Onboard extends React.Component<Props, State> {
                    Sử dụng Muncoordinated và vi-Muncoordiated ở các trình duyệt khác/cũ hơn sẽ xảy ra lỗi và/hoặc mất dữ liệu.
                   </p>
               </Message>
-              <Message>
-                <Message.Header>Thay đổi font</Message.Header>
-                  <p>
-                  Phiên bản gốc của Muncoordinated sử dụng font chữ <a 
-                    href="https://fonts.google.com/specimen/Lato">Lato</a>. Tuy nhiên, font này không hỗ trợ tiếng Việt nên chúng mình đã chuyển sang sử dung font <a href="https://fonts.google.com/specimen/Be+Vietnam+Pro">Be Vietnam Pro</a> trong thời gian hiện tại. Nếu bạn mong muốn có font chữ mới, bạn có thể đề xuất với chúng mình nhé!
-                  </p>
-              </Message>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>

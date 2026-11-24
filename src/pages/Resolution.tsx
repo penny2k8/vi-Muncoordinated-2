@@ -525,19 +525,19 @@ export default class Resolution extends React.Component<Props, State> {
                   </Grid.Column>
             </Grid>}
           {votingDone && this.state.showResult && resolutionPassed && <Statistic inverted>
-            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Thông qua</Statistic.Value>
-            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
+            <Statistic.Value style={{fontWeight: 'bold'}}>Thông qua</Statistic.Value>
+            <Statistic.Label>Số lượng phiếu hiện tại ({fors}) đã vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
             {requiredMajority === Majority.TwoThirdsNoAbstentions &&
-              <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
+              <Statistic.Label>Những lượt biểu quyết tiếp theo có thể thay đổi kết quả biểu quyết</Statistic.Label>
             }
           </Statistic>}
           {votingDone && this.state.showResult && resolutionFailed && <Statistic inverted>
-            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold"}}>Không thông qua</Statistic.Value>
-            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
+            <Statistic.Value style={{fontWeight: 'bold'}}>Không thông qua</Statistic.Value>
+            <Statistic.Label>Không có đủ số phiếu tán thành để vượt qua {thresholdName} hiện tại ({threshold})</Statistic.Label>
           </Statistic>}
           {resolutionVetoed && <Statistic inverted>
-            <Statistic.Value style={{ fontFamily: "'Be Vietnam Pro', sans-serif", fontWeight: "bold" }}>Phủ quyết</Statistic.Value>
-            <Statistic.Label style={{ fontFamily: "'Be Vietnam Pro', sans-serif" }}>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
+            <Statistic.Value style={{fontWeight: 'bold'}}>Phủ quyết</Statistic.Value>
+            <Statistic.Label>{vetoes[0].name} là đại biểu đầu tiên đã phủ quyết</Statistic.Label>
           </Statistic>}         
           <Segment inverted>
             {this.renderMajoritySelector(resolution)}

@@ -1,9 +1,9 @@
 overrides:
   "@types/react": "18.3.3"
 
-onlyBuiltDependencies:
-  - "@swc/core"
-  - cypress
-  - esbuild
-  - protobufjs
-  - re2
+allowBuilds:
+  '@swc/core': false
+  cypress: false
+  esbuild: false
+  protobufjs: false
+  re2: false

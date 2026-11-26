@@ -654,6 +654,7 @@ export default class Resolution extends React.Component<Props, State> {
           attatched="top"
           rows={3}
           placeholder="Nội dung nghị quyết"
+          style={{fontFamily:'LatoVH'}}
         />
       </Form>
     )

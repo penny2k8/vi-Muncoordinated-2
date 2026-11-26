@@ -107,7 +107,7 @@
 
 /* Title */
 .ui.steps .step .title {
-  font-family: 'LatoVH', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'LatoVH', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 1.14285714em;
   font-weight: bold;
 }

@@ -72,7 +72,7 @@
 
 .ui.modal > .header {
   display: block;
-  font-family: 'LatoVH', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'LatoVH', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background: #FFFFFF;
   margin: 0em;
   padding: 1.25rem 1.5rem;

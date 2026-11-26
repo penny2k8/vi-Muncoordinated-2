@@ -1,7 +1,7 @@
 {
-  "name": "semantic-ui-css-vimuncoord",
+  "name": "semantic-ui-css",
   "version": "2.5.0",
-  "title": "Semantic UI for vimuncoordinated",
+  "title": "Semantic UI",
   "description": "CSS Only distribution of Semantic UI",
   "homepage": "http://www.semantic-ui.com",
   "author": "Jack Lukic <jack@semantic-ui.com>",

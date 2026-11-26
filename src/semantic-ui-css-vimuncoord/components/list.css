@@ -160,7 +160,7 @@ ol.ui.list ol li,
 .ui.list > .item .header {
   display: block;
   margin: 0em;
-  font-family: 'LatoVH', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'LatoVH', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.87);
 }

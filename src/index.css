@@ -75,3 +75,6 @@ i.flag.myanmar:before,
 i.flag.burma:before {
   background-position: -36px -1717px !important;
 }
+textarea{
+  font-family: 'LatoVH' !important;
+}

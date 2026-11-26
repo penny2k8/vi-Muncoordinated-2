@@ -288,7 +288,7 @@ importers:
         specifier: ^25.0.0
         version: 25.0.0(supports-color@8.1.1)
       vitest:
-        specifier: ^2.0.5
+        specifier: ^2.0
         version: 2.0.5(@types/node@20.14.2)(jsdom@25.0.0(supports-color@8.1.1))(supports-color@8.1.1)
 
 packages:
